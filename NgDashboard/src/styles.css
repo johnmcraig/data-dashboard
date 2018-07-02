@@ -7,10 +7,10 @@ html {
 }
 
 body {
-    font-family: 'Source Sans Pro', sans-serif;
-    background-color: #1C2228;
-    color: #f7fff7;
-    height: 100%;
+  font-family: 'Source Sans Pro', sans-serif;
+  background-color: #1C2228;
+  color: #f7fff7;
+  height: 100%;
 }
 
 a {
@@ -25,6 +25,28 @@ a:hover {
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2), 0 5px 6px rgba(0, 0, 0, 0.3);
 }
 
-.section-contianer{
-    padding: 30px;
+.section-contianer {
+  padding: 30px;
+}
+
+.card-theme {
+  background-color: #191F26;
+  border: none;
+  border-radius: 2px;
+}
+
+.card-heading-theme {
+  color: #eee;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+  padding: 12px;
+}
+
+.card-body {
+  background-color: rgb(73, 91, 129);
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
 }
