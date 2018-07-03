@@ -17,7 +17,8 @@ export class PieChartComponent implements OnInit {
   ];
   colors = [
     {
-      backgroundColor: ['#26547c', '#ff6b6b', '#ffd166']
+      backgroundColor: ['#26547c', '#ff6b6b', '#ffd166'],
+      borderColor: '#111'
     }
   ];
   pieChartType = 'pie';
