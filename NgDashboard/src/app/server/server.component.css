@@ -1,0 +1,9 @@
+.block-status {
+    widows: 200px;
+    height: 200px;
+    font-size: 1.3em;
+    color: #000;
+    text-align: center;
+    padding: 0 20px;
+    margin: 20px;
+}

@@ -42,9 +42,9 @@ a:hover {
   padding: 12px;
 }
 
-.card-body {
+/* .card-body {
   background-color: rgb(40, 44, 54);
-}
+} */
 
 .cards {
   display: flex;
