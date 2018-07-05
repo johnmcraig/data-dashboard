@@ -1,9 +1,9 @@
 <div class="card mb-3 shadow block-status">
   <div class="card-header name">
-    Server name
+    {{ serverInput.name }}
   </div>
   <div class="card-body status">
-    Server status
+    {{ serverInput.isOnline }}
   </div>
-  <button class="btn bnt-default action">Toggle Status</button>
+  <button (click)="toggleStatus()" class="btn bnt-default action">Toggle Status</button>
 </div>

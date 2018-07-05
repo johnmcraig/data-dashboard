@@ -7,3 +7,23 @@
     padding: 0 20px;
     margin: 20px;
 }
+
+.status {
+    display: block;
+    transition: 0.3;
+}
+
+.name {
+    padding: 5px;
+    font-size: 0.7em;
+    display: block;
+    font-family: monospace;
+    transition: 0.3;
+}
+
+.action {
+    display: block;
+    font-size: 0.7em;
+    margin-top: 12px;
+    transition: 0.3;
+}
