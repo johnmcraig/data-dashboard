@@ -10,6 +10,14 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.0" />
   </ItemGroup>
+
+  <!-- <ItemGroup> Now included in the SDK, do not have to use NuGet manager to fetch then Restore them
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.1.0" />
+  </ItemGroup> -->
 
 </Project>
