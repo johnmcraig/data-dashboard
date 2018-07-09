@@ -3,11 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dashboard.API.Data
 {
-    public class ApiContext : DbContex
+    public class ApiContext : DbContext
     {
         public ApiContext(DbContextOptions<ApiContext> options) : base(options)
         {
-
         }
 
         public DbSet<Customer> Customers { get; set; }
