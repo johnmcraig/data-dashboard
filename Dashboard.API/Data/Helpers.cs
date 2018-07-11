@@ -13,6 +13,16 @@ namespace Dashboard.API
         }
         internal static string MakeUniqueCustomerName(List<string> names)
         {
+            /* 
+            throw an exception when the list of names is 
+            greater than the maximum number of permutations/combos of 
+            preffixes and suffixes 
+            */
+            var maxNames = bizPrefix.Count * bizSuffix.Count;
+            if(names.Count == maxNames)
+            {
+                throw new InvalidOperationException("Max number of unique names exceeded");
+            }
             var prefix = GetRandom(bizPrefix);
             var suffix = GetRandom(bizSuffix);
             var bizName = prefix = suffix;
@@ -24,11 +34,7 @@ namespace Dashboard.API
                 MakeUniqueCustomerName(names);
             }
             return bizName;
-            /* 
-            throw an exception when the list of names is 
-            greater than the maximum number of permutations/combos of 
-            preffixes and suffixes 
-            */
+            
         }
 
         internal static string MakeCustomerEmail(string customerName)
@@ -39,6 +45,35 @@ namespace Dashboard.API
         internal static string GetRandomState()
         {
             return GetRandom(usStates);
+        }
+
+        internal static decimal GetRandomOrderTotal()
+        {
+            return _rand.Next(100, 5000);
+        }
+
+        internal static DateTime GetRandomOrderPlaced()
+        {
+            var end = DateTime.Now;
+            var start = end.AddDays(-90);
+
+            TimeSpan possibleSpan = end - start;
+            TimeSpan newSpan = new TimeSpan(0, _rand.Next(0, (int)possibleSpan.TotalMinutes), 0);
+
+            return start + newSpan;
+        }
+        internal static DateTime? GetRandomOrderCompleted(DateTime orderPlaced)
+        {
+            var now = DateTime.Now;
+            var minLeadTime = TimeSpan.FromDays(7);
+            var timePassed = now - orderPlaced;
+
+            if(timePassed < minLeadTime)
+            {
+                return null;
+            }
+            
+            return orderPlaced.AddDays(_rand.Next(7, 14));
         }
 
         private static readonly List<string> usStates = new List<string>()
