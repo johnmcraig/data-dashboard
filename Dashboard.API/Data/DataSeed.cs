@@ -25,9 +25,9 @@ namespace Dashboard.API
                 SeedOrders(nOrders);
             }
 
-            if (!_context.Customers.Any())
+            if (!_context.Servers.Any())
             {
-                SeedServers(nCustomers);
+                SeedServers();
             }
 
             _context.SaveChanges();
@@ -36,7 +36,7 @@ namespace Dashboard.API
         {
             List<Customer> customers = BuildCustomerList(n);
 
-            foreach(var customer in customers)
+            foreach (var customer in customers)
             {
                 _context.Customers.Add(customer);
             }
@@ -45,16 +45,16 @@ namespace Dashboard.API
         {
             List<Order> orders = BuildOrderList(n);
 
-            foreach(var order in orders)
+            foreach (var order in orders)
             {
                 _context.Orders.Add(order);
             }
         }
-        private void SeedServers(int n)
+        private void SeedServers()
         {
-            List<Server> servers = BuildServerList(n);
+            List<Server> servers = BuildServerList();
 
-            foreach(var server in servers)
+            foreach (var server in servers)
             {
                 _context.Servers.Add(server);
             }
@@ -65,14 +65,15 @@ namespace Dashboard.API
             var names = new List<string>();
 
             //set primary key id and generate the properties in the db
-            for( var i = 1; i <= nCustomers; i++)
+            for (var i = 1; i <= nCustomers; i++)
             {
                 // when we make a customer name, we pass it as a list of names
                 var name = Helpers.MakeUniqueCustomerName(names);
                 //brute force a list of names and states calling them recusively
                 names.Add(name);
-                
-                customers.Add(new Customer {
+
+                customers.Add(new Customer
+                {
                     Id = i,
                     Name = name,
                     Email = Helpers.MakeCustomerEmail(name),
@@ -87,13 +88,14 @@ namespace Dashboard.API
             var orders = new List<Order>();
             var rand = new Random();
 
-            for(var i = 1; i <= nOrders; i++)
+            for (var i = 1; i <= nOrders; i++)
             {
                 var randCustomerId = rand.Next(_context.Customers.Count());
                 var placed = Helpers.GetRandomOrderPlaced();
                 var completed = Helpers.GetRandomOrderCompleted(placed); //completed only happens when an order was already placed
 
-                orders.Add(new Order {
+                orders.Add(new Order
+                {
                     Id = 1,
                     Customer = _context.Customers.First(c => c.Id == randCustomerId),
                     Total = Helpers.GetRandomOrderTotal(),
@@ -103,6 +105,69 @@ namespace Dashboard.API
             }
 
             return orders;
+        }
+
+        private List<Server> BuildServerList()
+        {
+            var servers = new List<Server>()
+            {
+                new Server
+                {
+                    Id = 1,
+                    Name = "Dev-Web",
+                    IsOnline = true
+                },
+                new Server
+                {
+                    Id = 2,
+                    Name = "Dev-Mail",
+                    IsOnline = true
+                },
+                new Server
+                {
+                    Id = 3,
+                    Name = "Dev-Services",
+                    IsOnline = true
+                },
+                new Server
+                {
+                    Id = 4,
+                    Name = "QA-Web",
+                    IsOnline = true
+                },
+                new Server
+                {
+                    Id = 5,
+                    Name = "QA-Mail",
+                    IsOnline = true
+                },
+                new Server
+                {
+                    Id = 6,
+                    Name = "QA-Services",
+                    IsOnline = true
+                },
+                new Server
+                {
+                    Id = 7,
+                    Name = "Prod-Web",
+                    IsOnline = true
+                },
+                new Server
+                {
+                    Id = 8,
+                    Name = "Prod-Mail",
+                    IsOnline = true
+                },
+                new Server
+                {
+                    Id = 9,
+                    Name = "Prod-Services",
+                    IsOnline = true
+                },
+            };
+
+            return servers;
         }
     }
 }
