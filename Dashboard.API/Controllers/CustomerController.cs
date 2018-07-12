@@ -6,22 +6,24 @@ using Microsoft.Extensions.Logging;
 
 namespace Dashboard.API.Controllers
 {
-  public class CustomerController : Controller
-  {
+    [Route("api/{controller}")]
+    public class CustomerController : Controller
+    {
         private readonly ApiContext _context;
         ILogger<CustomerController> _logger;
 
-    public CustomerController(ApiContext context, ILogger<CustomerController> logger)
-    {
+        public CustomerController(ApiContext context, ILogger<CustomerController> logger)
+        {
             _context = context;
             _logger = logger;
-    }
+        }
+        [HttpGet]
+        public IActionResult Get()
+        {
+            var data = _context.Customers.OrderBy(c => c.Id);
 
-    public IActionResult Index()
-    {
-      
-      return View();
+            return Ok(data);
+        }
     }
-  }
 }
 
