@@ -8,7 +8,6 @@ namespace Dashboard.API
         private static Random _rand = new Random();
         private static string GetRandom(IList<string> items)
         {
-            
             return items[_rand.Next(items.Count)]; //upper bound
         }
         internal static string MakeUniqueCustomerName(List<string> names)
@@ -16,16 +15,18 @@ namespace Dashboard.API
             /* 
             throw an exception when the list of names is 
             greater than the maximum number of permutations/combos of 
-            preffixes and suffixes 
+            prefixes and suffixes 
             */
             var maxNames = bizPrefix.Count * bizSuffix.Count;
+
             if(names.Count == maxNames)
             {
                 throw new InvalidOperationException("Max number of unique names exceeded");
             }
+
             var prefix = GetRandom(bizPrefix);
             var suffix = GetRandom(bizSuffix);
-            var bizName = prefix = suffix;
+            var bizName = prefix + suffix;
 
             //brute force check
             //dangerous as this is using recursion
@@ -33,8 +34,8 @@ namespace Dashboard.API
             {
                 MakeUniqueCustomerName(names);
             }
+
             return bizName;
-            
         }
 
         internal static string MakeCustomerEmail(string customerName)

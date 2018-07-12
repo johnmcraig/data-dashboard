@@ -13,24 +13,25 @@ namespace Dashboard.API
         {
             _context = context;
         }
-        public void SeeData(int nCustomers, int nOrders)
+        public void SeedData(int nCustomers, int nOrders)
         {
             if (!_context.Customers.Any())
             {
                 SeedCustomers(nCustomers);
+                _context.SaveChanges();
             }
 
-            if (!_context.Customers.Any())
+            if (!_context.Orders.Any())
             {
                 SeedOrders(nOrders);
+                _context.SaveChanges();
             }
 
             if (!_context.Servers.Any())
             {
                 SeedServers();
-            }
-
-            _context.SaveChanges();
+                _context.SaveChanges();
+            }            
         }
         private void SeedCustomers(int n)
         {
@@ -90,14 +91,15 @@ namespace Dashboard.API
 
             for (var i = 1; i <= nOrders; i++)
             {
-                var randCustomerId = rand.Next(_context.Customers.Count());
+                var randCustomerId = rand.Next(1, _context.Customers.Count()); //(1, ..) set min value to 1 as no customer id is set to 0 in the seed data
                 var placed = Helpers.GetRandomOrderPlaced();
                 var completed = Helpers.GetRandomOrderCompleted(placed); //completed only happens when an order was already placed
+                var customers = _context.Customers.ToList();
 
                 orders.Add(new Order
                 {
-                    Id = 1,
-                    Customer = _context.Customers.First(c => c.Id == randCustomerId),
+                    Id = i,
+                    Customer = customers.First(c => c.Id == randCustomerId),
                     Total = Helpers.GetRandomOrderTotal(),
                     Placed = placed,
                     Completed = completed
