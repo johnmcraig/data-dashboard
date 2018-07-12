@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Dashboard.API.Controllers
 {
-    [Route("api/{controller}")]
+    [Route("api/[controller]")]
     public class CustomerController : Controller
     {
         private readonly ApiContext _context;
@@ -17,6 +17,7 @@ namespace Dashboard.API.Controllers
             _context = context;
             _logger = logger;
         }
+        
         [HttpGet]
         public IActionResult Get()
         {
