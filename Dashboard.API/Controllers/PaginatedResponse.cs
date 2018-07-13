@@ -6,9 +6,9 @@ namespace Dashboard.API.Controllers
 {
     public class PaginatedResponse<T>
     {
-        private IOrderedQueryable<Order> data;
-        private int pageIndex;
-        private int pageSize;
+        // private IOrderedQueryable<Order> data;
+        // private int pageIndex;
+        // private int pageSize;
 
         public PaginatedResponse(IEnumerable<T> data,  int i, int len)
         {
@@ -19,10 +19,10 @@ namespace Dashboard.API.Controllers
         public int Total { get; set; }
         public IEnumerable<T> Data { get; set; }
 
-        public PaginatedResponse(IOrderedQueryable<Order> data, int pageIndex, int pageSize)
-        {
-            this.pageIndex = pageIndex;
-            this.pageSize = pageSize;
-        }
+        // public PaginatedResponse(IOrderedQueryable<Order> data, int pageIndex, int pageSize)
+        // {
+        //     this.pageIndex = pageIndex;
+        //     this.pageSize = pageSize;
+        // }
     }
 }
