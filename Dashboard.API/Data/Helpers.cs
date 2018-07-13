@@ -3,6 +3,13 @@ using System.Collections.Generic;
 
 namespace Dashboard.API
 {
+    /*
+    <summery>
+    This Helpers.cs class implements pre-defined data to the DataSeed class.
+    The methods include random number generation to make a preset combinations of customer names,
+    email contacts, thier resident State, and makes a number of orders with timestamps.
+    </summery
+     */
     public class Helpers
     {
         private static Random _rand = new Random();
@@ -15,7 +22,7 @@ namespace Dashboard.API
             /* 
             throw an exception when the list of names is 
             greater than the maximum number of permutations/combos of 
-            prefixes and suffixes 
+            prefixes and suffixes
             */
             var maxNames = bizPrefix.Count * bizSuffix.Count;
 
@@ -79,8 +86,11 @@ namespace Dashboard.API
 
         private static readonly List<string> usStates = new List<string>()
         {
-            "AK", "AL", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
-            "HI", "ID", "IL"
+            "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
+            "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "MA", "MD",
+            "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH",
+            "NJ", "NM", "NY", "NV", "OH", "OK", "OR", "PA", "RI", "SC",
+            "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY"
         }; 
 
         private static readonly List<string> bizPrefix = new List<string>()
@@ -93,7 +103,8 @@ namespace Dashboard.API
             "Street",
             "Budget",
             "Enterprise",
-            "Sales"
+            "Sales",
+            "Mission"
         };
         private static readonly List<string> bizSuffix = new List<string>()
         {
@@ -105,7 +116,8 @@ namespace Dashboard.API
             "Goods",
             "Foods",
             "Cleaners",
-            "Hotel"
+            "Hotel",
+            "Street"
         };
     }
 }
