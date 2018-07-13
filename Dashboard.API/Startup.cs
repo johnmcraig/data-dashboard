@@ -49,8 +49,9 @@ namespace Dashboard.API
             }
 
             app.UseHttpsRedirection();
-            
+
             seed.SeedData(20, 1000); //(x,y) called from service DataSeed that will populate DB with X customers and Y orders
+            
             app.UseMvc(routes => routes.MapRoute(
                 "default", "api/{controller}/{action}/{id}"
             ));

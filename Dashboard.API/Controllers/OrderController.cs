@@ -19,11 +19,11 @@ namespace Dashboard.API.Controllers
             _context = context;
             _logger = logger;
         }
+
         /*
         Pagination for the server
         GET api/order/pageNumber/pageSize
          */
-
         [HttpGet("{pageIndex:int}/{pageSize:int}")]
         public IActionResult Get(int pageIndex, int pageSize)
         {
@@ -33,7 +33,61 @@ namespace Dashboard.API.Controllers
 
             var page = new PaginatedResponse<Order>(data, pageIndex, pageSize);
 
-            return Ok(data);
+            var totalCount = data.Count();
+            var totalPages = Math.Ceiling((double)totalCount / pageSize);
+
+            var response = new
+            {
+                Page = page,
+                TotalPages = totalPages
+            };
+
+            return Ok(response);
         }
+
+        [HttpGet("ByState")]
+        public IActionResult ByState()
+        {
+            var orders = _context.Orders.Include(o => o.Customer).ToList();
+
+            var groupResult = orders.GroupBy(o => o.Customer.State)
+                .ToList()
+                .Select(grp => new
+                {
+                    State = grp.Key,
+                    Total = grp.Sum(x => x.Total)
+                }).OrderByDescending(res => res.Total) //descending number of States in order
+                .ToList();
+
+            return Ok(groupResult);
+        }
+
+        [HttpGet("ByCustomer")]
+        public IActionResult ByCustomer(int n)
+        {
+            var orders = _context.Orders.Include(o => o.Customer).ToList();
+
+            var groupResult = orders.GroupBy(o => o.Customer.State)
+                .ToList()
+                .Select(grp => new
+                {
+                    Name = _context.Customers.Find(grp.Key).Name,
+                    Total = grp.Sum(x => x.Total)
+                }).OrderByDescending(res => res.Total) //descending number of Customers in order
+                .Take(n)
+                .ToList();
+
+            return Ok(groupResult);
+        }
+
+        [HttpGet("GetOrder/{id}", Name = "GetOrder")]
+        public IActionResult GetOrder(int id)
+        {
+            var order = _context.Orders.Include(o => o.Customer)
+            .First(o => o.Id == id);
+
+            return Ok(order);
+        }
+
     }
 }
