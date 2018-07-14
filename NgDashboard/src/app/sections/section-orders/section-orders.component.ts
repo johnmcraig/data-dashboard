@@ -82,4 +82,8 @@ export class SectionOrdersComponent implements OnInit {
   goToPrevious(): void {
     console.log('Previous button clicked!');
   }
+
+  goToNext(): void {
+    console.log('Next button clicked!');
+  }
 }
