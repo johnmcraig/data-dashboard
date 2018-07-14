@@ -23,4 +23,8 @@ export class PaginationComponent implements OnInit {
   onPrev(): void {
     this.goPrev.emit(true);
   }
+
+  onNext(): void {
+    this.goPrev.emit(true);
+  }
 }

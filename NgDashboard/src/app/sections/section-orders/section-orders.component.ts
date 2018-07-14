@@ -78,4 +78,8 @@ export class SectionOrdersComponent implements OnInit {
   ];
 
   ngOnInit() {}
+
+  goToPrevious(): void {
+    console.log('Previous button clicked!');
+  }
 }
