@@ -43,18 +43,20 @@ namespace Dashboard.API.Controllers
             {
                 return NotFound();
             }
+
+            // TODO: refactor into a service class
             if (msg.Payload == "activate")
             {
                 server.IsOnline = true;
-                _context.SaveChanges();
             }
-            if (msg.Payload == "deactivated")
+            
+            if (msg.Payload == "deactivate")
             {
                 server.IsOnline = false;
             }
             
             _context.SaveChanges();
-            return Ok();
+            return new NoContentResult();
         }
     }
 }
