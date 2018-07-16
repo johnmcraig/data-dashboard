@@ -39,6 +39,6 @@ export class PaginationComponent implements OnInit {
   }
 
   isLastPage(): boolean {
-    return this.perPage = this.page >= this.count;
+    return this.perPage * this.page >= this.count;
   }
 }
