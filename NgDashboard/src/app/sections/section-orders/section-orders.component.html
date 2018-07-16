@@ -26,7 +26,7 @@
   <app-pagination
    (goPrev)="goToPrevious()"
    (goNext)="goToNext()"
-   (goNext)="goToNext()"
+   (goPage)="goToPage($event)"
    [page]="page"
    [perPage]="limit"
    [count="total">
