@@ -1,4 +1,7 @@
-<div>
-<button class="btn btn-small btn-info" (click)="onPrev()">Previous</button>
-<button class="btn btn-small btn-info" (click)="onNext()">Next</button>
+<div class="pages">
+    <span class="page-count">X through Y of Z orders</span>
+    <span class="page-count">{{ totalPages() }} total pages</span>
+    <button class="btn btn-small btn-info" (click)="onPrev()">Previous</button>
+    <b>...</b>
+    <button class="btn btn-small btn-info" (click)="onNext()">Next</button>
 </div>

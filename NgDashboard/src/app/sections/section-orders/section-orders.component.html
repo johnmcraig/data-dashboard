@@ -25,6 +25,10 @@
 
   <app-pagination
    (goPrev)="goToPrevious()"
-   (goNext)="goToNext()">
+   (goNext)="goToNext()"
+   (goNext)="goToNext()"
+   [page]="page"
+   [perPage]="limit"
+   [count="total">
   </app-pagination>
 </div>
