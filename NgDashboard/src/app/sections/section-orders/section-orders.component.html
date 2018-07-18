@@ -24,11 +24,11 @@
   </table>
 
   <app-pagination
-   (goPrev)="goToPrevious()"
-   (goNext)="goToNext()"
-   (goPage)="goToPage($event)"
-   [page]="page"
-   [perPage]="limit"
-   [count="total">
+  (goPage)="goToPage($event)"
+  (goPrev)="goToPrevious()"
+  (goNext)="goToNext()"
+  [page]="page"
+  [perPage]="limit"
+  [count="total">
   </app-pagination>
 </div>
