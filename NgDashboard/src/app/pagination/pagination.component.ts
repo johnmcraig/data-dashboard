@@ -60,7 +60,7 @@ export class PaginationComponent implements OnInit {
     const pagesToShow = this.pagesToShow || 9;
     const pages: number[] = [];
     pages.push(thisPage);
-    console.log('Starting loop with: total pages: ', totalPages, 'thisPage:', thisPage, 'pagesToShow', pagesToShow);
+    console.log('Starting loop with: total pages:', totalPages, 'this page:', thisPage, 'pages to show:', pagesToShow);
     for (let i = 0; i < pagesToShow - 1; i++) {
       console.log('pages[]:', pages);
       if (pages.length < pagesToShow) {
