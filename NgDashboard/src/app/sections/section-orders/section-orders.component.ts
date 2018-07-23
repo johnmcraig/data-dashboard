@@ -18,33 +18,33 @@ export class SectionOrdersComponent implements OnInit {
   loading = false;
 
   ngOnInit() {
-    // this.getOrders();
+    this.getOrders();
   }
 
-  // getOrders(): void {
-  //   this._salesData.getOrders(this.page, this.limit)
-  //     .subscribe(res => {
-  //       // console.log('Results from getOrders: ', res);
-  //       this.orders = res['page']['data'];
-  //       // this.total = res['page'].total;
-  //       // this.loading = false;
-  //     });
-  // }
+  getOrders(): void {
+    this._salesData.getOrders(this.page, this.limit)
+      .subscribe(res => {
+        console.log('Results from getOrders: ', res);
+        this.orders = res['page']['data'];
+        this.total = res['page'].total;
+        this.loading = false;
+      });
+  }
 
   goToPrevious(): void {
     console.log('Previous button clicked!');
     this.page--;
-    // this.getOrders();
+    this.getOrders();
   }
 
   goToNext(): void {
     console.log('Next button clicked!');
     this.page++;
-    // this.getOrders();
+    this.getOrders();
   }
 
   goToPage(n: number): void {
     this.page = n;
-    // this.getOrders();
+    this.getOrders();
   }
 }
