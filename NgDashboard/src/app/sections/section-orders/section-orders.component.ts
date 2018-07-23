@@ -38,7 +38,7 @@ export class SectionOrdersComponent implements OnInit {
   }
 
   goToNext(): void {
-    // console.log('Next button clicked!');
+    console.log('Next button clicked!');
     this.page++;
     // this.getOrders();
   }
