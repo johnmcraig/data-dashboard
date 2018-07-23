@@ -12,16 +12,16 @@ export class SalesDataService {
 
   getOrders(pageIndex: number, pageSize: number) {
      this.http.get('http://localhost:5001/api/order' + pageIndex + '/' + pageSize)
-      .pipe(map(response => { response.json(); }));
+      .pipe(map(response => response.json()));
   }
 
-  // getOrdersByCustomer(n: number) {
-  //   return this.http.get('http://locslhody:5001/api/order/bycustomer/' + n)
-  //   .pipe(map(response => response.json()));
-  // }
+  getOrdersByCustomer(n: number) {
+    return this.http.get('http://locslhody:5001/api/order/bycustomer/' + n)
+    .pipe(map(response => response.json()));
+  }
 
-  // getOrdersByState() {
-  //   return this.http.get('http://localhost:5001/api/order/bystate')
-  //     .subscribe(response => response.json());
-  // }
+  getOrdersByState() {
+    return this.http.get('http://localhost:5001/api/order/bystate')
+      .pipe(map(response => response.json()));
+  }
 }

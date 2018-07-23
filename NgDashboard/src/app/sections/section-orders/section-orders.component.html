@@ -23,12 +23,13 @@
     </tbody>
   </table>
 
-  <app-pagination
-  (goPage)="goToPage($event)"
-  (goPrev)="goToPrevious()"
+  <app-pagination (goPrev)="goToPrevious()">
+  
+  </app-pagination>
+</div>
+<!-- (goPage)="goToPage($event)"
+  
   (goNext)="goToNext()"
   [page]="page"
   [perPage]="limit"
-  [count="total">
-  </app-pagination>
-</div>
+  [count="total"> -->

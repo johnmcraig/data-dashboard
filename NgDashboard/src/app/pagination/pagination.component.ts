@@ -60,19 +60,19 @@ export class PaginationComponent implements OnInit {
     const pagesToShow = this.pagesToShow || 9;
     const pages: number[] = [];
     pages.push(thisPage);
-    // console.log('Starting llop wiht: total pages: ', totalPages, 'thisPage:', thisPage, 'pagesToShow', pagesToShow);
+    console.log('Starting llop wiht: total pages: ', totalPages, 'thisPage:', thisPage, 'pagesToShow', pagesToShow);
     for (let i = 0; i < pagesToShow - 1; i++) {
-      // console.log('pages[]:', pages);
+      console.log('pages[]:', pages);
       if (pages.length < pagesToShow) {
         if (Math.min.apply(null, pages) > 1) {
           pages.push(Math.min.apply(null, pages) - 1);
-          // console.log('pushing ', Math.min.apply(null, psges) - 1, 'onto array');
+          console.log('pushing ', Math.min.apply(null, pages) - 1, 'onto array');
         }
       }
       if (pages.length < pagesToShow) {
         if (Math.max.apply(null, pages) < totalPages) {
           pages.push(Math.max.apply(null, pages) + 1);
-           // console.log('pushing ', Math.max.apply(null, psges) + 1, 'onto array');
+           console.log('pushing ', Math.max.apply(null, pages) + 1, 'onto array');
         }
       }
     }
