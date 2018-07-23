@@ -16,4 +16,12 @@ This application was developed using:
 4. PostgreSQL database.
 
 ## Setup
-To download the application, clone the repository then run `npm i` to download any missing dependancies required for the project.
+To run the application, clone or downlaod the repository then run `npm i` inside the NgDashboard directory to import any missing dependancies required for the project.
+
+Make sure you are using the .Net Core SDK 2.0 or grater with `dotnet --version`. 
+
+After doing so, startup the API and the Angular SPA by typing the following commands: 
+- In the Dashboard.API directory, type `dotnet run`.
+- In the NgDashboard directory, type `ng serve`.
+
+Then open a browser at navigate to `http://localhost:4200` where the application should be running.
