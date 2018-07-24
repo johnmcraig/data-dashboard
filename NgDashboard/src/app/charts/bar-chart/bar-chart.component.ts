@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SalesDataService } from '../../services/sales-data.service';
+import * as moment from 'moment';
 
 // const SAMPLE_BARCHART_DATA: any[] = [
 //   { data: [65, 59, 80, 81, 56, 54, 30], label: 'Q3 Sales'},
@@ -32,8 +33,15 @@ export class BarChartComponent implements OnInit {
   ngOnInit() {
     this._salesDataService.getOrders(1, 100)
     .subscribe( response => {
-      console.log(response);  // ['page']['data']
+      // console.log(response['page']['data']);
+      const localChartData = this.getChartData(response);
     });
+  }
+
+  getChartData(response: Response) {
+    this.orders = response['page']['data'];
+    const data = this.orders.map(o => o.total);
+    console.log('data', data);
   }
 
 }
