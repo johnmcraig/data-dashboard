@@ -42,6 +42,23 @@ export class BarChartComponent implements OnInit {
     this.orders = response['page']['data'];
     const data = this.orders.map(o => o.total);
     console.log('data', data);
+    const labels = this.orders.map(o => moment(new Date(o.placed)).format('YY-MM-DD'));
+    const formattedOrders = this.orders.reduce((r, e) => {
+      r.push([moment(e.placed).format('YY-MM-DD'), e.total]);
+      return r;
+    }, []);
+    console.log(labels);
+    console.log(formattedOrders);
+    const p = [];
+    const chartData = formattedOrders.reduce((r, e) => {
+      const key = e[0];
+    });
+    // reduce
+    // const myData = [3, 4, 5].reduce((sum, value) => {
+    //   console.log('sum', sum, 'value', value);
+    //   return sum + value;
+    // }, 0);
+    // console.log('myData', myData);
   }
 
 }
