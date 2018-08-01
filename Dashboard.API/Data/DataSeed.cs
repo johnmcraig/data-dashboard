@@ -9,10 +9,12 @@ namespace Dashboard.API
     public class DataSeed
     {
         private readonly ApiContext _context;
+
         public DataSeed(ApiContext context)
         {
             _context = context;
         }
+
         public void SeedData(int nCustomers, int nOrders)
         {
             if (!_context.Customers.Any())
@@ -33,6 +35,7 @@ namespace Dashboard.API
                 _context.SaveChanges();
             }            
         }
+
         private void SeedCustomers(int n)
         {
             List<Customer> customers = BuildCustomerList(n);
@@ -42,6 +45,7 @@ namespace Dashboard.API
                 _context.Customers.Add(customer);
             }
         }
+
         private void SeedOrders(int n)
         {
             List<Order> orders = BuildOrderList(n);
@@ -51,6 +55,7 @@ namespace Dashboard.API
                 _context.Orders.Add(order);
             }
         }
+
         private void SeedServers()
         {
             List<Server> servers = BuildServerList();
@@ -60,6 +65,7 @@ namespace Dashboard.API
                 _context.Servers.Add(server);
             }
         }
+
         private List<Customer> BuildCustomerList(int nCustomers)
         {
             var customers = new List<Customer>();
@@ -70,7 +76,7 @@ namespace Dashboard.API
             {
                 // when we make a customer name, we pass it as a list of names
                 var name = Helpers.MakeUniqueCustomerName(names);
-                //brute force a list of names and states calling them recusively
+                //brute force a list of names and states, calling them recusively
                 names.Add(name);
 
                 customers.Add(new Customer
@@ -84,6 +90,7 @@ namespace Dashboard.API
 
             return customers;
         }
+
         private List<Order> BuildOrderList(int nOrders)
         {
             var orders = new List<Order>();

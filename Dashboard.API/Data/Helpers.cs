@@ -13,10 +13,12 @@ namespace Dashboard.API
     public class Helpers
     {
         private static Random _rand = new Random();
+
         private static string GetRandom(IList<string> items)
         {
             return items[_rand.Next(items.Count)]; //upper bound
         }
+
         internal static string MakeUniqueCustomerName(List<string> names)
         {
             /* 
@@ -70,6 +72,7 @@ namespace Dashboard.API
 
             return start + newSpan;
         }
+
         internal static DateTime? GetRandomOrderCompleted(DateTime orderPlaced)
         {
             var now = DateTime.Now;
@@ -106,6 +109,7 @@ namespace Dashboard.API
             "Sales",
             "Mission"
         };
+
         private static readonly List<string> bizSuffix = new List<string>()
         {
             "Corporation",
