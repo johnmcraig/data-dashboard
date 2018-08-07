@@ -63,7 +63,7 @@ export class BarChartComponent implements OnInit {
       }
       return r;
     }, []);
-    console.log(chartData);
+    // console.log(chartData);
     return chartData;
     // reduce
     // const myData = [3, 4, 5].reduce((sum, value) => {

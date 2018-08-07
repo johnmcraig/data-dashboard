@@ -16,7 +16,7 @@ export class SalesDataService {
   }
 
   getOrdersByCustomer(n: number) {
-    return this.http.get('http://locslhody:5000/api/order/bycustomer/' + n)
+    return this.http.get('http://localhost:5000/api/order/bycustomer/' + n)
     .pipe(map(response => response.json()));
   }
 

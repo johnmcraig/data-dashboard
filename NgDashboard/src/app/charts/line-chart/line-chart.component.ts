@@ -33,7 +33,21 @@ export class LineChartComponent implements OnInit {
 
   ngOnInit() {
     this._salesDataService.getOrders(1, 100).subscribe(response => {
-      console.log('getOrders', response);
+      this.allOrders = response['page']['data'];
+      // console.log('getOrders', response);
+      // console.log(this.allOrders);
+      this._salesDataService.getOrdersByCustomer(3).subscribe(customer => {
+        this.topCustomers = customer.map(x => x['name']);
+        const allChartData = this.topCustomers.reduce((result, i)) => {
+          result.push(this.getChartData(this.allOrders, i));
+          return result;
+        }, []);
+      });
     });
+  }
+
+  getChartData(allOrders: any, name: string) {
+    const customerOrders = allOrders.filter(o => o.customer.name === name);
+    console.log('customerOrders', customerOrders);
   }
 }
