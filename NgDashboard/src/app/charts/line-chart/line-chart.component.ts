@@ -22,8 +22,8 @@ export class LineChartComponent implements OnInit {
   topCustomers: string[];
   allOrders: any[];
 
-  lineChartData: any; // LINE_CHART_SAMPLE_DATA;
-  lineChartLabels: any; // LINE_CHART_LABELS;
+  lineChartData: any; // = LINE_CHART_SAMPLE_DATA;
+  lineChartLabels: any; // = LINE_CHART_LABELS;
   lineChartType = 'line';
   lineChartOptions: any = {
     responsive: true
@@ -48,6 +48,15 @@ export class LineChartComponent implements OnInit {
 
   getChartData(allOrders: any, name: string) {
     const customerOrders = allOrders.filter(o => o.customer.name === name);
-    console.log('customerOrders', customerOrders);
+    console.log('name:', name, 'customerOrders', customerOrders);
+    const formattedOrders = customerOrders.reduce((r, e) => {   // r = accumulator, e = iterator in callback function
+      r.push([e.placed, e.total]);
+      return r;
+    }, []);
+
+    console.log('formattedOrders', formattedOrders);
+    const result = { customer: name, data: formattedOrders};
+    console.log('result', result);
+    return result;
   }
 }
