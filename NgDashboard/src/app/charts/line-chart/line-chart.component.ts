@@ -28,17 +28,17 @@ export class LineChartComponent implements OnInit {
   lineChartOptions: any = {
     responsive: true
   };
-  lineChartLegend = true;
+  lineChartLegend: true;
   lineChartColors = LINE_CHART_COLORS;
 
   ngOnInit() {
-    this._salesDataService.getOrders(1, 100).subscribe(response => {
-      this.allOrders = response['page']['data'];
+    this._salesDataService.getOrders(1, 100).subscribe(res => {
+      this.allOrders = res['page']['data'];
       // console.log('getOrders', response);
       // console.log(this.allOrders);
       this._salesDataService.getOrdersByCustomer(3).subscribe(customer => {
         this.topCustomers = customer.map(x => x['name']);
-        const allChartData = this.topCustomers.reduce((result, i)) => {
+        const allChartData = this.topCustomers.reduce((result, i) => {
           result.push(this.getChartData(this.allOrders, i));
           return result;
         }, []);
