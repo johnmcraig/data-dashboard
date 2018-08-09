@@ -42,6 +42,13 @@ export class LineChartComponent implements OnInit {
           result.push(this.getChartData(this.allOrders, i));
           return result;
         }, []);
+        // define dates by iterating over all ChartData
+        let dates = allChartData.map(x => x['data']).reduce((a, i) => { // a = accumulator, i = itterator
+          a.push(i.map(o => new Date(o[0])));
+          return a;
+        }, []);
+        console.log('dates:', dates);
+        dates = [].concat.apply([], dates);
       });
     });
   }
