@@ -1,5 +1,5 @@
 # Trend Dashboard
-A dashboard UI using Angular with .Net Web API back-end
+A dashboard UI using Angular and Chart.js with .Net Core Web API back-end
 
 ## Usage
 Trend Dashbaord is a web based application with a heavy UI/UX emphisis using Angular that displays readable data of financial and ordering trends (hince the name) based on queries from a PostreSQL database.
