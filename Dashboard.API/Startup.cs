@@ -37,8 +37,12 @@ namespace Dashboard.API
 
             _connectionString = Configuration["secretConnectionString"];
             
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddEntityFrameworkNpgsql().AddDbContext<ApiContext>(opt => opt.UseNpgsql(_connectionString));
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddEntityFrameworkNpgsql()
+                .AddDbContext<ApiContext>(opt => opt.UseNpgsql(_connectionString));
+                
             //transient service to call DataSeed program class on starup
             services.AddTransient<DataSeed>();
         }
