@@ -333,3 +333,4 @@ ASALocalRun/
 .vscode
 bin/
 obj/
+secretConnectionString.txt
