@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 namespace DashboardApi.Controllers
 {
     [Route("api/[controller]")]
-    public class OrderController : Controllerbase
+    public class OrderController : ControllerBase
     {
         private readonly ApiContext _context;
         ILogger<OrderController> _logger;

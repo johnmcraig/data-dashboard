@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace DashboardApi.Controllers
 {
     [Route("api/[controller]")]
-    public class CustomerController : Controllerbase
+    public class CustomerController : ControllerBase
     {
         private readonly ApiContext _context;
         ILogger<CustomerController> _logger;

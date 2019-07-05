@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Dashboard.API.Data;
-using Dashboard.API.Models;
+using DashboardApi.Data;
+using DashboardApi.Models;
 
 namespace DashboardApi.Data
 {

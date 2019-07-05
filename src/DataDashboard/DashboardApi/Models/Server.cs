@@ -1,4 +1,4 @@
-namespace Dashboard.API.Models
+namespace DashboardApi.Models
 {
     public class Server
     {

@@ -1,4 +1,4 @@
-using Dashboard.API.Models;
+using DashboardApi.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DashboardApi.Data
