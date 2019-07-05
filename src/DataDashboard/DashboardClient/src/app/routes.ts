@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { SectionSalesComponent } from './app/sections/section-sales/section-sales.component';
-import { SectionOrdersComponent } from './app/sections/section-orders/section-orders.component';
-import { SectionHealthComponent } from './app/sections/section-health/section-health.component';
+import { SectionSalesComponent } from './sections/section-sales/section-sales.component';
+import { SectionOrdersComponent } from './sections/section-orders/section-orders.component';
+import { SectionHealthComponent } from './sections/section-health/section-health.component';
 
 
 export const appRoutes: Routes = [

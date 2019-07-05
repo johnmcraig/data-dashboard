@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using Dashboard.API.Models;
+using DashboardApi.Models;
 
-namespace Dashboard.API.Controllers
+namespace DashboardApi.Controllers
 {
     public class PaginatedResponse<T>
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Dashboard.API
+namespace DashboardApi.Data
 {
     /*
     <summery>

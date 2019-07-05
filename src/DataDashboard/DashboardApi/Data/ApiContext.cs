@@ -1,7 +1,7 @@
 using Dashboard.API.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Dashboard.API.Data
+namespace DashboardApi.Data
 {
     public class ApiContext : DbContext
     {

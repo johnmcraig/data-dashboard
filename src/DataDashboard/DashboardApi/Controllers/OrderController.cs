@@ -1,15 +1,15 @@
 using System;
 using System.Linq;
-using Dashboard.API.Data;
-using Dashboard.API.Models;
+using DashboardApi.Data;
+using DashboardApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Dashboard.API.Controllers
+namespace DashboardApi.Controllers
 {
     [Route("api/[controller]")]
-    public class OrderController : Controller
+    public class OrderController : Controllerbase
     {
         private readonly ApiContext _context;
         ILogger<OrderController> _logger;

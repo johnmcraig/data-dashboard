@@ -4,7 +4,7 @@ using System.Linq;
 using Dashboard.API.Data;
 using Dashboard.API.Models;
 
-namespace Dashboard.API
+namespace DashboardApi.Data
 {
     public class DataSeed
     {
