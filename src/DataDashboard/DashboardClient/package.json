@@ -24,7 +24,7 @@
     "chart.js": "^2.7.2",
     "core-js": "^2.5.4",
     "cryptiles": "^4.1.2",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "ng2-charts": "^1.6.0",
     "popper.js": "^1.14.4",
     "rxjs": "^6.0.0",
