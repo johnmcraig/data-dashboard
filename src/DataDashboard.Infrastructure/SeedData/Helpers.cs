@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace DashboardApi.Data
+namespace DataDashboard.Infrastructure.SeedData
 {
     /*
     <summery>
     This Helpers.cs class implements pre-defined data to the DataSeed class.
     The methods include random number generation to make a preset combinations of customer names,
-    email contacts, thier resident State, and makes a number of orders with timestamps.
+    email contacts, their resident State, and makes a number of orders with timestamps.
     </summery
      */
     public class Helpers
@@ -28,7 +28,7 @@ namespace DashboardApi.Data
             */
             var maxNames = bizPrefix.Count * bizSuffix.Count;
 
-            if(names.Count == maxNames)
+            if (names.Count == maxNames)
             {
                 throw new InvalidOperationException("Max number of unique names exceeded");
             }
@@ -79,22 +79,67 @@ namespace DashboardApi.Data
             var minLeadTime = TimeSpan.FromDays(7);
             var timePassed = now - orderPlaced;
 
-            if(timePassed < minLeadTime)
+            if (timePassed < minLeadTime)
             {
                 return null;
             }
-            
+
             return orderPlaced.AddDays(_rand.Next(7, 14));
         }
 
         private static readonly List<string> usStates = new List<string>()
         {
-            "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
-            "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "MA", "MD",
-            "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH",
-            "NJ", "NM", "NY", "NV", "OH", "OK", "OR", "PA", "RI", "SC",
-            "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY"
-        }; 
+            "AL",
+            "AK",
+            "AZ",
+            "AR",
+            "CA",
+            "CO",
+            "CT",
+            "DE",
+            "FL",
+            "GA",
+            "HI",
+            "ID",
+            "IL",
+            "IN",
+            "IA",
+            "KS",
+            "KY",
+            "LA",
+            "MA",
+            "MD",
+            "ME",
+            "MI",
+            "MN",
+            "MO",
+            "MS",
+            "MT",
+            "NC",
+            "ND",
+            "NE",
+            "NH",
+            "NJ",
+            "NM",
+            "NY",
+            "NV",
+            "OH",
+            "OK",
+            "OR",
+            "PA",
+            "RI",
+            "SC",
+            "SD",
+            "TN",
+            "TX",
+            "UT",
+            "VA",
+            "VT",
+            "WA",
+            "WI",
+            "WV",
+            "WY"
+        };
 
         private static readonly List<string> bizPrefix = new List<string>()
         {

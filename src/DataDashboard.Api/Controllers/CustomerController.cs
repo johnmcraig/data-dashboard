@@ -5,7 +5,7 @@ using DashboardApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace DashboardApi.Controllers
+namespace DataDashboard.Api.Controllers
 {
     [Route("api/[controller]")]
     public class CustomerController : ControllerBase
@@ -37,14 +37,17 @@ namespace DashboardApi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Customer customer)
         {
-            if(customer == null){
+            if (customer == null)
+            {
                 return BadRequest();
             }
             _context.Customers.Add(customer);
             _context.SaveChanges();
 
-            return CreatedAtRoute("GetCsutomer", new { id = customer.Id }, customer);
+            return CreatedAtRoute("GetCsutomer", new
+            {
+                id = customer.Id
+            }, customer);
         }
     }
 }
-

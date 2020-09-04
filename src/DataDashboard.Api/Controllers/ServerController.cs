@@ -5,7 +5,7 @@ using DashboardApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Dashboard.API.Controllers
+namespace DataDashboard.Api.Controllers
 {
     [Route("api/[controller]")]
     public class ServerController : ControllerBase
@@ -38,7 +38,7 @@ namespace Dashboard.API.Controllers
         public IActionResult Message(int id, [FromForm] ServerMessage msg)
         {
             var server = _context.Servers.Find(id);
-            
+
             if (server == null)
             {
                 return NotFound();
@@ -49,12 +49,12 @@ namespace Dashboard.API.Controllers
             {
                 server.IsOnline = true;
             }
-            
+
             if (msg.Payload == "deactivate")
             {
                 server.IsOnline = false;
             }
-            
+
             _context.SaveChanges();
             return new NoContentResult();
         }

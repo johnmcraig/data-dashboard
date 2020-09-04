@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace DashboardApi.Controllers
+namespace DataDashboard.Api.Controllers
 {
     [Route("api/[controller]")]
     public class OrderController : ControllerBase
@@ -28,8 +28,8 @@ namespace DashboardApi.Controllers
         public IActionResult Get(int pageIndex, int pageSize)
         {
             var data = _context.Orders
-                    .Include(o => o.Customer)
-                    .OrderByDescending(c => c.Placed);
+                .Include(o => o.Customer)
+                .OrderByDescending(c => c.Placed);
 
             var page = new PaginatedResponse<Order>(data, pageIndex, pageSize);
 
@@ -55,7 +55,7 @@ namespace DashboardApi.Controllers
                 .Select(grp => new
                 {
                     State = grp.Key,
-                    Total = grp.Sum(x => x.Total)
+                        Total = grp.Sum(x => x.Total)
                 }).OrderByDescending(res => res.Total) //descending number of States in order
                 .ToList();
 
@@ -72,7 +72,7 @@ namespace DashboardApi.Controllers
                 .Select(grp => new
                 {
                     Name = _context.Customers.Find(grp.Key).Name,
-                    Total = grp.Sum(x => x.Total)
+                        Total = grp.Sum(x => x.Total)
                 }).OrderByDescending(res => res.Total) //descending number of Customers in order
                 .Take(n)
                 .ToList();
@@ -84,7 +84,7 @@ namespace DashboardApi.Controllers
         public IActionResult GetOrder(int id)
         {
             var order = _context.Orders.Include(o => o.Customer)
-            .First(o => o.Id == id);
+                .First(o => o.Id == id);
 
             return Ok(order);
         }
