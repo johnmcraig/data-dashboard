@@ -72,7 +72,7 @@ namespace DataDashboard.Api
 
             app.UseCors("CorsPolicy");
 
-            seed.SeedData(20, 1000); //(x,y) called from service DataSeed that will populate DB with X customers and Y orders
+            seed.SeedData(25, 1000); //(x,y) called from service DataSeed that will populate DB with X customers and Y orders
 
             app.UseEndpoints(endpoints =>
             {
