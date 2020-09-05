@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace DataDashboard.Api.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class CustomerController : ControllerBase
     {
         private readonly ApiContext _context;
@@ -31,6 +32,7 @@ namespace DataDashboard.Api.Controllers
         public IActionResult Get(int id)
         {
             var customer = _context.Customers.Find(id);
+
             return Ok(customer);
         }
 
@@ -41,6 +43,7 @@ namespace DataDashboard.Api.Controllers
             {
                 return BadRequest();
             }
+            
             _context.Customers.Add(customer);
             _context.SaveChanges();
 

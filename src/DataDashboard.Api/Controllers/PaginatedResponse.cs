@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DashboardApi.Models;
 
-namespace DataDashboardApi.Controllers
+namespace DataDashboard.Api.Controllers
 {
     public class PaginatedResponse<T>
     {

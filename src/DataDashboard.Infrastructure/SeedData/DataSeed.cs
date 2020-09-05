@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DashboardApi.Data;
-using DashboardApi.Models;
+using DataDashboard.Infrastructure.Data;
+using DataDashboard.Core.Entities;
 
 namespace DataDashboard.Infrastructure.SeedData
 {

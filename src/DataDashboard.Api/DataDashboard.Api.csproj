@@ -13,6 +13,12 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.5.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="5.5.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.2" />
+    <PackageReference Include="Npgsql" Version="4.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataDashboard.Infrastructure\DataDashboard.Infrastructure.csproj" />
+    <ProjectReference Include="..\DataDashboard.Client\DataDashboard.Client.csproj" />
   </ItemGroup>
 
   <!-- <ItemGroup> Now included in the SDK, do not have to use NuGet manager to fetch then Restore them
