@@ -20,8 +20,6 @@ namespace DataDashboard.Api
 {
     public class Startup
     {
-        private string _connectionString = null;
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -43,11 +41,6 @@ namespace DataDashboard.Api
                     .AllowAnyHeader()
                     .AllowAnyMethod());
             });
-
-            _connectionString = Configuration["secretConnectionString"];
-
-            services.AddEntityFrameworkNpgsql()
-                .AddDbContext<ApiContext>(opt => opt.UseNpgsql(_connectionString));
 
             //transient service to call DataSeed program class on startup
             services.AddTransient<DataSeed>();
@@ -71,6 +64,8 @@ namespace DataDashboard.Api
             app.UseHttpsRedirection();
 
             app.UseCors("CorsPolicy");
+
+            app.UseRouting();
 
             seed.SeedData(25, 1000); //(x,y) called from service DataSeed that will populate DB with X customers and Y orders
 
