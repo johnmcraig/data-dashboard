@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
-using DashboardApi.Data;
-using DashboardApi.Models;
+using DataDashboard.Core.Entities;
+using DataDashboard.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -9,12 +9,13 @@ using Microsoft.Extensions.Logging;
 namespace DataDashboard.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class OrderController : ControllerBase
+    [ApiController]
+    public class OrdersController : ControllerBase
     {
         private readonly ApiContext _context;
-        ILogger<OrderController> _logger;
+        ILogger<OrdersController> _logger;
 
-        public OrderController(ApiContext context, ILogger<OrderController> logger)
+        public OrdersController(ApiContext context, ILogger<OrdersController> logger)
         {
             _context = context;
             _logger = logger;

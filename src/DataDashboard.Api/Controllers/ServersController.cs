@@ -1,19 +1,20 @@
 using System;
 using System.Linq;
-using DashboardApi.Data;
-using DashboardApi.Models;
+using DataDashboard.Core.Entities;
+using DataDashboard.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace DataDashboard.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class ServerController : ControllerBase
+    [ApiController]
+    public class ServersController : ControllerBase
     {
         private readonly ApiContext _context;
-        ILogger<ServerController> _logger;
+        ILogger<ServersController> _logger;
 
-        public ServerController(ApiContext context, ILogger<ServerController> logger)
+        public ServersController(ApiContext context, ILogger<ServersController> logger)
         {
             _context = context;
             _logger = logger;

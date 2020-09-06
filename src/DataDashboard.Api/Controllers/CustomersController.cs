@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
-using DashboardApi.Data;
-using DashboardApi.Models;
+using DataDashboard.Infrastructure.Data;
+using DataDashboard.Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -9,12 +9,12 @@ namespace DataDashboard.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class CustomersController : ControllerBase
     {
         private readonly ApiContext _context;
-        ILogger<CustomerController> _logger;
+        ILogger<CustomersController> _logger;
 
-        public CustomerController(ApiContext context, ILogger<CustomerController> logger)
+        public CustomersController(ApiContext context, ILogger<CustomersController> logger)
         {
             _context = context;
             _logger = logger;
@@ -28,7 +28,7 @@ namespace DataDashboard.Api.Controllers
             return Ok(data);
         }
 
-        [HttpGet("{id}", Name = "Getcustomer")]
+        [HttpGet("{id}", Name = "GetCustomer")]
         public IActionResult Get(int id)
         {
             var customer = _context.Customers.Find(id);
@@ -47,7 +47,7 @@ namespace DataDashboard.Api.Controllers
             _context.Customers.Add(customer);
             _context.SaveChanges();
 
-            return CreatedAtRoute("GetCsutomer", new
+            return CreatedAtRoute("GetCustomer", new
             {
                 id = customer.Id
             }, customer);
