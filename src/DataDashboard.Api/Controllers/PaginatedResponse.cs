@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using DashboardApi.Models;
+using DataDashboard.Core.Entities;
+using DataDashboard.Infrastructure.Data;
 
 namespace DataDashboard.Api.Controllers
 {
