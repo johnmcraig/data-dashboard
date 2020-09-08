@@ -26,7 +26,7 @@ export class BarChartComponent implements OnInit {
   public barChartType = 'bar';
   public barChartLegend = false;
   public barChartOptions: any = {
-    scaleShowVerticleLines: false,
+    scaleShowVerticalLines: false,
     responsive: true
   };
 

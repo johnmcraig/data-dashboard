@@ -14,7 +14,7 @@
     <button class="btn btn-small btn-info btn-pageNumber"
     *ngFor="let pageNum of getPages()"
     (click)="onPage(pageNum)"
-    [ngClass]="{'active': pageNum === page, 'disable': laoding }">{{ pageNum }}</button>
+    [ngClass]="{'active': pageNum === page, 'disable': loading }">{{ pageNum }}</button>
     
     <button class="btn btn-small btn-info"
     (click)="onNext()"
