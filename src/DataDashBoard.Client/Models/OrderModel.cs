@@ -1,10 +1,11 @@
 using System;
 
-namespace DataDashboard.Core.Entities
+namespace DataDashboard.Client.Models
 {
-    public class Order : BaseEntity
+    public class OrderModel
     {
-        public Customer Customer { get; set; }
+        public int Id { get; set; }
+        public CustomerModel Customer { get; set; }
         public decimal Total { get; set; }
         public DateTime Placed { get; set; }
         public DateTime? Completed { get; set; }

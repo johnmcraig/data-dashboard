@@ -1,4 +1,4 @@
-﻿using DataDashboard.Core;
+﻿using DataDashboard.Core.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using DataDashboard.Infrastructure.Data;
 
@@ -8,10 +8,10 @@ namespace DataDashboard.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
-            // services.AddScoped<ISqlDataAccess, SqliteDataAccess>();
+            // services.AddScoped<ISqlDataAccess, SqlDataAccess>();
             services.AddDbContext<ApiContext>();
 
-            // services.AddScoped<>();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             // services.AddScoped<>();
             // services.AddScoped<IUnitOfWork, UnitOfWork>();
 

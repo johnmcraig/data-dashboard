@@ -1,6 +1,6 @@
-namespace DataDashboard.Core.Entities
+namespace DataDashboard.Client.Models
 {
-    public class ServerMessage
+    public class ServerMessageModel
     {
         public int Id { get; set; }
         public string Payload { get; set; }

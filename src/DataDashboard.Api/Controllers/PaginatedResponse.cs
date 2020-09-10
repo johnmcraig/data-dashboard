@@ -17,16 +17,8 @@ namespace DataDashboard.Api.Controllers
             Total = data.Count();
         }
 
-        public int Total
-        {
-            get;
-            set;
-        }
-        public IEnumerable<T> Data
-        {
-            get;
-            set;
-        }
+        public int Total { get; set; }
+        public IEnumerable<T> Data { get; set; }
 
         // public PaginatedResponse(IOrderedQueryable<Order> data, int pageIndex, int pageSize)
         // {
