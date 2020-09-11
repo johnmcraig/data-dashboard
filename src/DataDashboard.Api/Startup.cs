@@ -65,6 +65,10 @@ namespace DataDashboard.Api
 
             app.UseCors("CorsPolicy");
 
+            app.UseBlazorFrameworkFiles();
+            
+            app.UseStaticFiles();
+
             app.UseRouting();
 
             seed.SeedData(25, 1000); //(x,y) called from service DataSeed that will populate DB with X customers and Y orders
@@ -72,6 +76,7 @@ namespace DataDashboard.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapFallbackToFile("index.html");
             });
 
         }
