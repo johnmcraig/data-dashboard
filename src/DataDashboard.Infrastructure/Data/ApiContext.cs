@@ -19,7 +19,7 @@ namespace DataDashboard.Infrastructure.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-             optionsBuilder.UseNpgsql(_config.GetConnectionString("secretConnectionString"));
+             optionsBuilder.UseNpgsql(_config.GetConnectionString("default"));
             // optionsBuilder.UseSqlServer(_config.GetConnectionString("sqlConString"));
             // optionsBuilder.UseSqlite(_config.GetConnectionString("sqlite"));
         }
