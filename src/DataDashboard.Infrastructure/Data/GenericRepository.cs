@@ -5,7 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataDashboard.Infrastructure.Data
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> where T : class
+    // : IGenericRepository<T> 
     {
         private readonly ApiContext _context;
 
@@ -13,7 +14,7 @@ namespace DataDashboard.Infrastructure.Data
         {
             _context = context;
         }
-        
+
         public async Task<IList<T>> ListAllAsync()
         {
             return await _context.Set<T>().ToListAsync();

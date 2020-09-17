@@ -9,47 +9,49 @@ using Microsoft.Extensions.Logging;
 
 namespace DataDashboard.Infrastructure.Data
 {
-    public class OrderRepository : IGenericRepository<Order>
+    public class OrderRepository : IOrderRepository
     {
-        private readonly ILogger<OrderRepository> _logger;
         private readonly ISqlDataAccess _dataAccess;
+
         private const string ConnectionString = "default";
 
-        public OrderRepository(ILogger<OrderRepository> logger, ISqlDataAccess dataAccess)
+        public OrderRepository(ISqlDataAccess dataAccess)
         {
-            _logger = logger;
             _dataAccess = dataAccess;
         }
-        
+
         public async Task<IList<Order>> ListAllAsync()
         {
-            var query = @"SELECT * FROM dbo.Orders";
-            
+            //DELCARE @PageSize int DECLARE @PageNumber int SET @PageSize = 25 SET @PageNumber = 2 ORDER BY Completed OFFEST @PageSize * (@PageNumber - 1) ROWS FETCH NEXT @PageSize ROWS ONLY
+            var query = @"SELECT o.*, cus.""Name"" FROM ""public"".""Orders"" AS o LEFT JOIN ""public"".""Customers"" AS cus ON o.""CustomerId"" = cus.""Id"" SELECT * FROM ""public"".""Customers"" WHERE ""Id"" = @Id";
+
             try
             {
                 var orders = await _dataAccess.
-                    LoadData<Order, dynamic>(query, new { }, ConnectionString);
+                LoadData<Order, dynamic>(query, new
+                { }, ConnectionString);
                 return orders.ToList();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError(ex.Message);
-                return null;
+                throw;
             }
         }
 
         public async Task<Order> GetByIdAsync(int id)
         {
-            var query = @"SELECT * FROM dbo.Orders WHERE Id = @Id";
+            var query = @"SELECT * FROM ""public"".""Orders"" WHERE ""Id"" = @Id";
             try
             {
                 var order = await _dataAccess.
-                    LoadData<Order, dynamic>(query, new {Id = id}, ConnectionString);
+                LoadData<Order, dynamic>(query, new
+                {
+                    Id = id
+                }, ConnectionString);
                 return order.FirstOrDefault();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError(ex.Message);
                 throw;
             }
         }
