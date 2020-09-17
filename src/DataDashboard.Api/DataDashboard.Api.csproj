@@ -21,8 +21,4 @@
     <ProjectReference Include="..\DataDashboard.Client\DataDashboard.Client.csproj" />
   </ItemGroup>
 
-  <!-- <ItemGroup> Now included in the SDK, do not have to use NuGet manager to fetch then Restore them
-    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.1.0" />
-  </ItemGroup> -->
-
 </Project>
