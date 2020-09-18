@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
 using DataDashboard.Core.DataSqlAccess;
 using DataDashboard.Core.Entities;
 using DataDashboard.Core.Interfaces;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Npgsql;
 
 namespace DataDashboard.Infrastructure.Data
 {
@@ -14,23 +18,35 @@ namespace DataDashboard.Infrastructure.Data
         private readonly ISqlDataAccess _dataAccess;
 
         private const string ConnectionString = "default";
+        private readonly IConfiguration _config;
 
-        public OrderRepository(ISqlDataAccess dataAccess)
+        public OrderRepository(ISqlDataAccess dataAccess, IConfiguration config)
         {
+            _config = config;
             _dataAccess = dataAccess;
         }
 
         public async Task<IList<Order>> ListAllAsync()
         {
             //DELCARE @PageSize int DECLARE @PageNumber int SET @PageSize = 25 SET @PageNumber = 2 ORDER BY Completed OFFEST @PageSize * (@PageNumber - 1) ROWS FETCH NEXT @PageSize ROWS ONLY
-            var query = @"SELECT o.*, cus.""Name"" FROM ""public"".""Orders"" AS o LEFT JOIN ""public"".""Customers"" AS cus ON o.""CustomerId"" = cus.""Id"" SELECT * FROM ""public"".""Customers"" WHERE ""Id"" = @Id";
+            var query = @"SELECT o.*, cus.* FROM ""public"".""Orders"" AS o LEFT JOIN ""public"".""Customers"" AS cus ON o.""CustomerId"" = cus.""Id""";
 
             try
             {
-                var orders = await _dataAccess.
-                LoadData<Order, dynamic>(query, new
-                { }, ConnectionString);
-                return orders.ToList();
+                // var orders = await _dataAccess.
+                // LoadData<Order, dynamic>(query, new
+                // { }, ConnectionString);
+                // return orders.ToList();
+                using(var connection = new NpgsqlConnection(_config.GetConnectionString(ConnectionString)))
+                {
+                    connection.Open();
+                    var resultList = await connection.QueryAsync<Order, Customer, Order>(query, (o, cus) =>
+                        {
+                            o.Customer = cus;
+                            return o;
+                        }, splitOn: "Id");
+                    return resultList.ToList();
+                }
             }
             catch (Exception)
             {
