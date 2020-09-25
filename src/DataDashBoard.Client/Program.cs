@@ -1,8 +1,11 @@
 using System;
 using System.Net.Http;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Text;
+using Blazored.LocalStorage;
+using Blazored.Toast;
+using DataDashboard.Client.Contracts;
+using DataDashboard.Client.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +22,15 @@ namespace DataDashboard.Client
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
+            builder.Services.AddBlazoredToast();
+            builder.Services.AddBlazoredLocalStorage();
+            
+            builder.Services.AddTransient(typeof(IRepositoryBase<>), typeof(RepositoryService<>));
+            builder.Services.AddTransient<IOrderRepository, OrderService>();
+            builder.Services.AddTransient<ICustomerRepository, CustomerService>();
+
+            builder.Services.AddOptions();
+            
             await builder.Build().RunAsync();
         }
     }
