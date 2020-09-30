@@ -1,9 +1,47 @@
-﻿@page "/Orders/List"
+﻿@page "/orders"
 
 
 @inject IOrderRepository _repo;
+
 <h3>Order List</h3>
 
-@code {
+@if (Model == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Date Placed</th>
+                <th>Date Completed</th>
+                <th>Total Amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+            <tr>
+                <td>@order.Placed</td>
+                <td>@order.Completed</td>
+                <td>@order.Total</td>
+                <td><a href="" class="btn btn-primary">Details</a></td>
+            </tr> 
+            }
+        </tbody>
+    </table>
     
+}
+
+@code {
+    private IList<OrderModel> Model;
+    private CustomerModel Customer;
+
+    protected override async Task OnInitializedAsync()
+    {
+       Model = await _repo.GetAll(Endpoints.OrdersEndpoint);
+    }
+
 }
