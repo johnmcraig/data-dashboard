@@ -28,8 +28,7 @@ namespace DataDashboard.Infrastructure.Data
 
         public async Task<IList<Order>> ListAllAsync()
         {
-            //DELCARE @PageSize int DECLARE @PageNumber int SET @PageSize = 25 SET @PageNumber = 2 ORDER BY Completed OFFEST @PageSize * (@PageNumber - 1) ROWS FETCH NEXT @PageSize ROWS ONLY
-            var query = @"SELECT o.*, cus.* FROM ""public"".""Orders"" AS o LEFT JOIN ""public"".""Customers"" AS cus ON o.""CustomerId"" = cus.""Id""";
+            var query = @"SELECT o.*, cus.* FROM ""public"".""Orders"" AS o LEFT JOIN ""public"".""Customers"" AS cus ON o.""CustomerId"" = cus.""Id"" LIMIT 10";
 
             try
             {
