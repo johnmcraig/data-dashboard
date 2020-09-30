@@ -1,7 +1,40 @@
-﻿@page "/Customers/List"
+﻿@page "/customers"
 
-<h3>CustomerList</h3>
+@inject ICustomerRepository _repo;
+
+<h3>Customer List</h3>
+
+@if (Model == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model)
+            {
+                <tr>
+                    <td>@customer.Name</td>
+                    <td>@customer.Email</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+}
 
 @code {
-    
+    private IList<CustomerModel> Model;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Model = await _repo.GetAll(Endpoints.CustomersEndpoint);
+    }
 }
