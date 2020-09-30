@@ -51,40 +51,40 @@ namespace DataDashboard.Client.Services
             }
         }
 
-        public async Task<T> Create(string url, T entity)
-        {
-            var response = await _client.PostAsJsonAsync<T>(url, entity);
+        //public async Task<T> Create(string url, T entity)
+        //{
+        //    var response = await _client.PostAsJsonAsync<T>(url, entity);
             
-            if (response.StatusCode == System.Net.HttpStatusCode.Created) 
-                return entity;
+        //    if (response.StatusCode == System.Net.HttpStatusCode.Created) 
+        //        return entity;
 
-            return null; 
-        }
+        //    return null; 
+        //}
 
-        public async Task<bool> Update(string url, T entity, int id)
-        {
-            if (entity == null) 
-                return false;
+        //public async Task<bool> Update(string url, T entity, int id)
+        //{
+        //    if (entity == null) 
+        //        return false;
 
-            var response = await _client.PutAsJsonAsync(url + id, entity);
+        //    var response = await _client.PutAsJsonAsync(url + id, entity);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.NoContent) 
-                return true;
+        //    if (response.StatusCode == System.Net.HttpStatusCode.NoContent) 
+        //        return true;
 
-            return false;
-        }
+        //    return false;
+        //}
 
-        public async Task<bool> Delete(string url, int id)
-        {
-            if (id < 1) 
-                return false;
+        //public async Task<bool> Delete(string url, int id)
+        //{
+        //    if (id < 1) 
+        //        return false;
 
-            var response = await _client.DeleteAsync(url + id);
+        //    var response = await _client.DeleteAsync(url + id);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
-                return true;
+        //    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+        //        return true;
 
-            return false;
-        }
+        //    return false;
+        //}
     }
 }
