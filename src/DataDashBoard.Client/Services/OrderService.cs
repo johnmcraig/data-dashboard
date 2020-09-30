@@ -12,11 +12,11 @@ namespace DataDashboard.Client.Services
     public class OrderService : RepositoryService<OrderModel>, IOrderRepository
     {
         private readonly HttpClient _client;
-        private readonly ILogger<RepositoryService<OrderModel>> _logger;
+        private readonly ILogger<OrderService> _logger;
         private readonly ILocalStorageService _localStorage;
 
-        protected OrderService(HttpClient client, 
-            ILogger<RepositoryService<OrderModel>> logger, 
+        public OrderService(HttpClient client, 
+            ILogger<OrderService> logger, 
             ILocalStorageService localStorage) : base(client, logger, localStorage)
         {
             _client = client;

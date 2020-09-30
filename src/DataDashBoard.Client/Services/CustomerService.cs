@@ -9,11 +9,11 @@ namespace DataDashboard.Client.Services
     public class CustomerService : RepositoryService<CustomerModel>, ICustomerRepository
     {
         private readonly HttpClient _client;
-        private readonly ILogger<RepositoryService<CustomerModel>> _logger;
+        private readonly ILogger<CustomerService> _logger;
         private readonly ILocalStorageService _localStorage;
 
-        protected CustomerService(HttpClient client, 
-            ILogger<RepositoryService<CustomerModel>> logger, 
+        public CustomerService(HttpClient client, 
+            ILogger<CustomerService> logger, 
             ILocalStorageService localStorage) : base(client, logger, localStorage)
         {
             _client = client;
