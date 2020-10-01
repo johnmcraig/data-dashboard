@@ -32,8 +32,6 @@ namespace DataDashboard.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-           // var data = _context.Customers.OrderBy(c => c.Id);
-
             var customers = await _unitOfWork.Customers.ListAllAsync();
 
             return Ok(customers);
@@ -42,15 +40,13 @@ namespace DataDashboard.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-           // var customer = _context.Customers.Find(id);
-
            var customer = await _unitOfWork.Customers.GetByIdAsync(id);
 
             return Ok(customer);
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Customer customer)
+        public IActionResult Create([FromBody] Customer customer)
         {
             if (customer == null)
             {
