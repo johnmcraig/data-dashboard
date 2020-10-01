@@ -16,7 +16,6 @@ namespace DataDashboard.Infrastructure.Data
     public class OrderRepository : IOrderRepository
     {
         private readonly ISqlDataAccess _dataAccess;
-
         private const string ConnectionString = "default";
         private readonly IConfiguration _config;
 
@@ -28,22 +27,24 @@ namespace DataDashboard.Infrastructure.Data
 
         public async Task<IList<Order>> ListAllAsync()
         {
-            var query = @"SELECT o.*, cus.* FROM ""public"".""Orders"" AS o LEFT JOIN ""public"".""Customers"" AS cus ON o.""CustomerId"" = cus.""Id"" LIMIT 10";
+            var query = "SELECT o.*, cus.* FROM \"public\".\"Orders\" AS o " +
+                        "LEFT JOIN \"public\".\"Customers\" AS cus " +
+                        "ON o.\"CustomerId\" = cus.\"Id\" LIMIT 25";
 
             try
             {
-                // var orders = await _dataAccess.
-                // LoadData<Order, dynamic>(query, new
-                // { }, ConnectionString);
-                // return orders.ToList();
-                using(var connection = new NpgsqlConnection(_config.GetConnectionString(ConnectionString)))
+                using (var connection = new NpgsqlConnection(_config
+                    .GetConnectionString(ConnectionString)))
                 {
                     connection.Open();
-                    var resultList = await connection.QueryAsync<Order, Customer, Order>(query, (o, cus) =>
+
+                    var resultList = await connection.QueryAsync<Order, Customer, Order>
+                        (query, (o, cus) =>
                         {
                             o.Customer = cus;
                             return o;
                         }, splitOn: "Id");
+
                     return resultList.ToList();
                 }
             }
@@ -55,7 +56,8 @@ namespace DataDashboard.Infrastructure.Data
 
         public async Task<Order> GetByIdAsync(int id)
         {
-            var query = @"SELECT * FROM ""public"".""Orders"" WHERE ""Id"" = @Id";
+            var query = "SELECT * FROM \"public\".\"Orders\" WHERE \"Id\" = @Id";
+
             try
             {
                 var order = await _dataAccess.
@@ -63,6 +65,7 @@ namespace DataDashboard.Infrastructure.Data
                 {
                     Id = id
                 }, ConnectionString);
+
                 return order.FirstOrDefault();
             }
             catch (Exception)
