@@ -10,20 +10,28 @@
 }
 else
 {
-    <table>
-        <thead>
+    <table class="table table-striped table-responsive-sm">
+        <thead class="thead-dark">
             <tr>
                 <th>Name</th>
                 <th>Email</th>
+                <th>State</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var customer in Model)
             {
-                <tr>
-                    <td>@customer.Name</td>
-                    <td>@customer.Email</td>
-                </tr>
+            <tr>
+                <td scope="row">@customer.Name</td>
+                <td scope="row">@customer.Email</td>
+                <td scope="row">@customer.State</td>
+                <td>
+                    <a href="/customers/details/@customer.Id" class="btn btn-primary">
+                        Details
+                    </a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>
