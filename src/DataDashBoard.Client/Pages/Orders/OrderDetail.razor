@@ -1,0 +1,50 @@
+﻿@page "/orders/detail/{Id:int}"
+
+@inject IOrderRepository _repo;
+
+<h3>Order Detail</h3>
+
+@if (Model == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="col-md-4">
+        <table class="table table-responsive-lg">
+            <tr>
+                <td>Date Placed</td>
+                <td>@Model.Placed</td>
+            </tr>
+            <tr>
+                <td>Date Completed</td>
+                <td>@Model.Completed</td>
+            </tr>
+            <tr>
+                <td>Order ID</td>
+                <td>@Model.Id</td>
+            </tr>
+            <tr>
+                <td>Amount</td>
+                <td>@Model.Total</td>
+            </tr>
+            @*<tr>
+                <td>Customer</td>
+                <td>@Model.Customer</td>
+            </tr>*@
+        </table>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private OrderModel Model;
+    private CustomerModel Customer;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Model = await _repo.GetSingle(Endpoints.OrdersEndpoint, Id);
+    }
+}
