@@ -1,0 +1,42 @@
+﻿@page "/customers/details/{Id:int}"
+
+@inject ICustomerRepository _repo;
+
+<h3>Customer Details</h3>
+
+@if (Model == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="col-md-4">
+        <table class="table table-responsive-xl">
+            <tr>
+                <td>Customer Name</td>
+                <td>@Model.Name</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>@Model.Email</td>
+            </tr>
+            <tr>
+                <td>State</td>
+                <td>@Model.State</td>
+            </tr>
+        </table>
+
+        </div>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private CustomerModel Model;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Model = await _repo.GetSingle(Endpoints.CustomersEndpoint, Id);
+    }
+}
