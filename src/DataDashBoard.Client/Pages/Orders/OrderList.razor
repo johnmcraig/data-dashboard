@@ -11,8 +11,8 @@
 }
 else
 {
-    <table>
-        <thead>
+    <table class="table table-striped table-responsive-xl">
+        <thead class="thead-dark">
             <tr>
                 <th>Date Placed</th>
                 <th>Date Completed</th>
@@ -27,7 +27,11 @@ else
                 <td>@order.Placed</td>
                 <td>@order.Completed</td>
                 <td>@order.Total</td>
-                <td><a href="" class="btn btn-primary">Details</a></td>
+                <td>
+                    <a href="/orders/detail/@order.Id" class="btn btn-primary">
+                        Details
+                    </a>
+                </td>
             </tr> 
             }
         </tbody>
@@ -37,7 +41,6 @@ else
 
 @code {
     private IList<OrderModel> Model;
-    private CustomerModel Customer;
 
     protected override async Task OnInitializedAsync()
     {
