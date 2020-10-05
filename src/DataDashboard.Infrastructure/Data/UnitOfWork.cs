@@ -6,7 +6,9 @@ namespace DataDashboard.Infrastructure.Data
 {
     public class UnitOfWork : IUnitOfWork
     {
-        public UnitOfWork(ICustomerRepository customerRepository, IOrderRepository orderRepository)
+
+        public UnitOfWork(ICustomerRepository customerRepository, 
+            IOrderRepository orderRepository)
         {
             Customers = customerRepository;
             Orders = orderRepository;
