@@ -8,7 +8,7 @@ namespace DataDashboard.Infrastructure.SeedData
     This Helpers.cs class implements pre-defined data to the DataSeed class.
     The methods include random number generation to make a preset combinations of customer names,
     email contacts, their resident State, and makes a number of orders with timestamps.
-    </summery
+    </summery>
      */
     public class Helpers
     {
@@ -16,7 +16,7 @@ namespace DataDashboard.Infrastructure.SeedData
 
         private static string GetRandom(IList<string> items)
         {
-            return items[_rand.Next(items.Count)]; //upper bound
+            return items[_rand.Next(items.Count)];
         }
 
         internal static string MakeUniqueCustomerName(List<string> names)
