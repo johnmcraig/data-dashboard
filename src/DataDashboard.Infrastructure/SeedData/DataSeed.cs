@@ -82,9 +82,9 @@ namespace DataDashboard.Infrastructure.SeedData
                 customers.Add(new Customer
                 {
                     Id = i,
-                        Name = name,
-                        Email = Helpers.MakeCustomerEmail(name),
-                        State = Helpers.GetRandomState()
+                    Name = name,
+                    Email = Helpers.MakeCustomerEmail(name),
+                    State = Helpers.GetRandomState()
                 });
             }
 
@@ -106,10 +106,10 @@ namespace DataDashboard.Infrastructure.SeedData
                 orders.Add(new Order
                 {
                     Id = i,
-                        Customer = customers.First(c => c.Id == randCustomerId),
-                        Total = Helpers.GetRandomOrderTotal(),
-                        Placed = placed,
-                        Completed = completed
+                    Customer = customers.First(c => c.Id == randCustomerId),
+                    Total = Helpers.GetRandomOrderTotal(),
+                    Placed = placed,
+                    Completed = completed
                 });
             }
 
