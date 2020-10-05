@@ -8,7 +8,8 @@ namespace DataDashboard.Infrastructure.Data
     {
         private readonly IConfiguration _config;
 
-        public ApiContext(DbContextOptions<ApiContext> options, IConfiguration config) : base(options)
+        public ApiContext(DbContextOptions<ApiContext> options, 
+            IConfiguration config) : base(options)
         {
             _config = config;
         }
