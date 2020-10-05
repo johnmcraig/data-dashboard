@@ -1,0 +1,67 @@
+﻿@page "/orders/details/{Id:int}"
+
+@inject IOrderRepository _orderRepo;
+
+<h3>Order Details</h3>
+
+@if (Model == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="col-md-4">
+        <table class="table table-responsive-lg">
+            <tr>
+                <td>Date Placed</td>
+                <td>@Model.Placed</td>
+            </tr>
+            <tr>
+                <td>Date Completed</td>
+                <td>
+                    @if (Model.Completed == null)
+                    {
+                        <span>Not yet completed</span>
+                    }
+                    else
+                    {
+                        @Model.Completed
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>Order ID</td>
+                <td>@Model.Id</td>
+            </tr>
+            <tr>
+                <td>Amount</td>
+                <td>@Model.Total</td>
+            </tr>
+            <tr>
+                <td>Customer</td>
+                <td>
+                    @if (Model.Customer == null)
+                    {
+                        <span>No customer recorded</span>
+                    }
+                    else
+                    { 
+                        @Model.Customer.Name
+                    }
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private OrderModel Model;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Model = await _orderRepo.GetSingle(Endpoints.OrdersEndpoint, Id);
+    }
+}
