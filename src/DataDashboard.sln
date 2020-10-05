@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataDashboard.Core", "DataD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataDashboard.Infrastructure", "DataDashboard.Infrastructure\DataDashboard.Infrastructure.csproj", "{61EF92B4-055B-4AFC-9CC4-C79FB6D4A176}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataDashboard.Client", "DataDashBoard.Client\DataDashboard.Client.csproj", "{3F8FECF3-43C9-4B10-A634-2B8FE1570C6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataDashboard.Client", "DataDashboard.Client\DataDashboard.Client.csproj", "{3F8FECF3-43C9-4B10-A634-2B8FE1570C6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
