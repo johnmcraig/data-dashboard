@@ -5,8 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataDashboard.Infrastructure.Data
 {
-    public class GenericRepository<T> where T : class
-    // : IGenericRepository<T> 
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         private readonly ApiContext _context;
 
