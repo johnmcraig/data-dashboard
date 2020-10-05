@@ -18,10 +18,14 @@ namespace DataDashboard.Infrastructure.Data
         private readonly ISqlDataAccess _dataAccess;
         private const string ConnectionString = "default";
         private readonly IConfiguration _config;
+        private readonly ILogger<OrderRepository> _logger;
 
-        public OrderRepository(ISqlDataAccess dataAccess, IConfiguration config)
+        public OrderRepository(ISqlDataAccess dataAccess, 
+            IConfiguration config,
+            ILogger<OrderRepository> logger)
         {
             _config = config;
+            _logger = logger;
             _dataAccess = dataAccess;
         }
 
@@ -29,7 +33,8 @@ namespace DataDashboard.Infrastructure.Data
         {
             var query = "SELECT o.*, cus.* FROM \"public\".\"Orders\" AS o " +
                         "LEFT JOIN \"public\".\"Customers\" AS cus " +
-                        "ON o.\"CustomerId\" = cus.\"Id\" LIMIT 25";
+                        "ON o.\"CustomerId\" = cus.\"Id\" " +
+                        "ORDER BY o.\"Id\"";
 
             try
             {
@@ -48,28 +53,41 @@ namespace DataDashboard.Infrastructure.Data
                     return resultList.ToList();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError($"Error:{ex}");
                 throw;
             }
         }
 
         public async Task<Order> GetByIdAsync(int id)
         {
-            var query = "SELECT * FROM \"public\".\"Orders\" WHERE \"Id\" = @Id";
-
+            var query = "SELECT o.\"Id\", o.\"CustomerId\", o.\"Placed\", o.\"Completed\"," +
+                        " o.\"Total\", cus.\"Id\", cus.\"Name\""+
+                        "FROM \"public\".\"Orders\" AS o " +
+                        "INNER JOIN \"public\".\"Customers\" AS cus " +
+                        "ON o.\"CustomerId\" = cus.\"Id\" " +
+                        "WHERE o.\"Id\" = @Id";
             try
             {
-                var order = await _dataAccess.
-                LoadData<Order, dynamic>(query, new
+                using (var connection = new NpgsqlConnection(_config
+                    .GetConnectionString(ConnectionString)))
                 {
-                    Id = id
-                }, ConnectionString);
+                    connection.Open();
 
-                return order.FirstOrDefault();
+                    var orders = await connection.QueryAsync<Order, Customer, Order>
+                        (query, (order, customer) =>
+                        {
+                            order.Customer = customer;
+                            return order;
+                        }, new { @Id = id }, splitOn: "Id");
+
+                    return orders.FirstOrDefault();
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError($"Error:{ex}");
                 throw;
             }
         }
