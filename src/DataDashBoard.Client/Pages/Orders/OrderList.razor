@@ -1,6 +1,5 @@
 ﻿@page "/orders"
 
-
 @inject IOrderRepository _repo;
 
 <h3>Order List</h3>
@@ -17,6 +16,7 @@ else
                 <th>Date Placed</th>
                 <th>Date Completed</th>
                 <th>Total Amount</th>
+                <th>Customer</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -28,7 +28,17 @@ else
                 <td>@order.Completed</td>
                 <td>@order.Total</td>
                 <td>
-                    <a href="/orders/detail/@order.Id" class="btn btn-primary">
+                    @if (order.Customer == null)
+                    {
+                        <span>no customer recorded</span>
+                    }
+                    else
+                    {
+                        @order.Customer.Name
+                    }
+                </td>
+                <td>
+                    <a href="/orders/details/@order.Id" class="btn btn-primary">
                         Details
                     </a>
                 </td>
