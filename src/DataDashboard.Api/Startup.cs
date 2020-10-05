@@ -31,8 +31,6 @@ namespace DataDashboard.Api
                     .AllowAnyMethod());
             });
 
-            // services.AddTransient<DataSeed>();
-
             services.AddControllers().AddNewtonsoftJson(opt =>
             {
                 opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
@@ -62,8 +60,6 @@ namespace DataDashboard.Api
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            // seed.SeedData(25, 1000); //(x,y) called from service DataSeed that will populate DB with X customers and Y orders
 
             app.UseEndpoints(endpoints =>
             {
