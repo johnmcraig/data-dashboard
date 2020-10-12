@@ -1,6 +1,5 @@
 ﻿using DataDashboard.Api.Extensions;
 using DataDashboard.Infrastructure;
-using DataDashboard.Infrastructure.SeedData;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

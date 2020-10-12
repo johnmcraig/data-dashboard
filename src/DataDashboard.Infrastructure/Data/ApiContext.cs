@@ -6,6 +6,8 @@ namespace DataDashboard.Infrastructure.Data
 {
     public class ApiContext : DbContext
     {
+        public ApiContext(){}
+
         private readonly IConfiguration _config;
 
         public ApiContext(DbContextOptions<ApiContext> options, 
@@ -21,8 +23,6 @@ namespace DataDashboard.Infrastructure.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
              optionsBuilder.UseNpgsql(_config.GetConnectionString("default"));
-            // optionsBuilder.UseSqlServer(_config.GetConnectionString("sqlConString"));
-            // optionsBuilder.UseSqlite(_config.GetConnectionString("sqlite"));
         }
     }
 }

@@ -22,20 +22,19 @@ else
         <tbody>
             @foreach (var customer in Model)
             {
-            <tr>
-                <td scope="row">@customer.Name</td>
-                <td scope="row">@customer.Email</td>
-                <td scope="row">@customer.State</td>
-                <td>
-                    <a href="/customers/details/@customer.Id" class="btn btn-primary">
-                        Details
-                    </a>
-                </td>
-            </tr>
+                <tr>
+                    <td scope="row">@customer.Name</td>
+                    <td scope="row">@customer.Email</td>
+                    <td scope="row">@customer.State</td>
+                    <td>
+                        <a href="/customers/details/@customer.Id" class="btn btn-primary">
+                            Details
+                        </a>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
-    
 }
 
 @code {

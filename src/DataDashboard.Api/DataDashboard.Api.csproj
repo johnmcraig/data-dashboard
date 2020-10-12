@@ -21,4 +21,8 @@
     <ProjectReference Include="..\DataDashboard.Client\DataDashboard.Client.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
 </Project>

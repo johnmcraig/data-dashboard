@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Blazored.LocalStorage;
 using DataDashboard.Client.Contracts;
 using DataDashboard.Client.Models;

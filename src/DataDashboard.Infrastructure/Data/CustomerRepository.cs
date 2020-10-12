@@ -27,8 +27,9 @@ namespace DataDashboard.Infrastructure.Data
                 var customer = await _dataAccess.LoadData<Customer, dynamic>
                     (query, new
                     {
-                        Id = id
+                        @Id = id
                     }, ConnectionString);
+
                 return customer.FirstOrDefault();
             }
             catch (Exception)
@@ -39,13 +40,22 @@ namespace DataDashboard.Infrastructure.Data
 
         public async Task<IList<Customer>> ListAllAsync()
         {
-            var query = "SELECT * FROM \"public\".\"Customers\"";
+            int page = 1;
+            int pageSize = 10;
+
+            var query = "SELECT * FROM \"public\".\"Customers\" " +
+                        "OFFSET @Offset ROWS " +
+                        "FETCH NEXT @PageSize ROWS ONLY";
 
             try
             {
                 var customers = await _dataAccess.LoadData<Customer, dynamic>
-                    (query, new
-                    { }, ConnectionString);
+                    (query, new 
+                    {
+                        Offset = (page - 1) * pageSize,
+                        PageSize = pageSize
+                    }, ConnectionString);
+
                 return customers.ToList();
             }
             catch (Exception)

@@ -31,10 +31,15 @@ namespace DataDashboard.Infrastructure.Data
 
         public async Task<IList<Order>> ListAllAsync()
         {
+            int page = 1;
+            int pageSize = 10;
+
             var query = "SELECT o.*, cus.* FROM \"public\".\"Orders\" AS o " +
                         "LEFT JOIN \"public\".\"Customers\" AS cus " +
                         "ON o.\"CustomerId\" = cus.\"Id\" " +
-                        "ORDER BY o.\"Id\"";
+                        "ORDER BY o.\"Id\"" +
+                        "OFFSET @Offset ROWS " +
+                        "FETCH NEXT @PageSize ROWS ONLY";
 
             try
             {
@@ -48,6 +53,11 @@ namespace DataDashboard.Infrastructure.Data
                         {
                             o.Customer = cus;
                             return o;
+                        },
+                        new 
+                        {
+                            Offset = (page - 1) * pageSize,
+                            PageSize = pageSize
                         }, splitOn: "Id");
 
                     return resultList.ToList();
@@ -80,7 +90,11 @@ namespace DataDashboard.Infrastructure.Data
                         {
                             order.Customer = customer;
                             return order;
-                        }, new { @Id = id }, splitOn: "Id");
+                        }, 
+                        new 
+                        { 
+                            @Id = id
+                        }, splitOn: "Id");
 
                     return orders.FirstOrDefault();
                 }
