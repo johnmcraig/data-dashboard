@@ -15,14 +15,16 @@ namespace DataDashboard.Api.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly ApiContext _context;
-        ILogger<CustomersController> _logger;
+        private readonly ILogger<CustomersController> _logger;
         private readonly IUnitOfWork _unitOfWork;
 
         public CustomersController(ILogger<CustomersController> logger,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork,
+        ApiContext context)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
+            _context = context;
         }
 
         [HttpGet]
@@ -72,20 +74,20 @@ namespace DataDashboard.Api.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult Create([FromBody] Customer customer)
+        public async Task<IActionResult> CreateCustomer([FromBody] Customer customer)
         {
             if (customer == null)
             {
                 return BadRequest();
             }
-            
-            _context.Customers.Add(customer);
-            _context.SaveChanges();
 
-            return CreatedAtRoute("GetCustomer", new
+            await _unitOfWork.Customers.Create(customer);
+
+            return CreatedAtRoute("CreateCustomer", new
             {
                 id = customer.Id
             }, customer);
+               
         }
     }
 }

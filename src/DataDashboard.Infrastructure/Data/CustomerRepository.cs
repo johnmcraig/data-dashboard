@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using DataDashboard.Core.DataSqlAccess;
@@ -40,26 +41,51 @@ namespace DataDashboard.Infrastructure.Data
 
         public async Task<IList<Customer>> ListAllAsync()
         {
-            int page = 1;
-            int pageSize = 10;
+            //int page = 1;
+            //int pageSize = 10;
 
-            var query = "SELECT * FROM \"public\".\"Customers\" " +
-                        "OFFSET @Offset ROWS " +
-                        "FETCH NEXT @PageSize ROWS ONLY";
+            var query = "SELECT * FROM \"public\".\"Customers\" "; 
+                        //"OFFSET @Offset ROWS " +
+                        //"FETCH NEXT @PageSize ROWS ONLY";
 
             try
             {
                 var customers = await _dataAccess.LoadData<Customer, dynamic>
                     (query, new 
                     {
-                        Offset = (page - 1) * pageSize,
-                        PageSize = pageSize
+                        //Offset = (page - 1) * pageSize,
+                        //PageSize = pageSize
                     }, ConnectionString);
 
                 return customers.ToList();
             }
             catch (Exception)
             {
+                throw;
+            }
+        }
+
+        public async Task<Customer> Create(Customer entity)
+        {
+            string query = "INSERT INTO \"public\".\"Customers\" " +
+                           "(\"Name\", \"Email\", \"State\") VALUES (@Name, @Email, @State);";
+
+            try
+            {
+                var customer = new
+                {
+                    entity.Name,
+                    entity.Email,
+                    entity.State
+                };
+                    
+                await _dataAccess.SaveData(query, customer, ConnectionString);
+
+                return entity;
+            }
+            catch (Exception)
+            {
+
                 throw;
             }
         }

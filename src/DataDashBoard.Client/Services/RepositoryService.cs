@@ -51,15 +51,15 @@ namespace DataDashboard.Client.Services
             }
         }
 
-        //public async Task<T> Create(string url, T entity)
-        //{
-        //    var response = await _client.PostAsJsonAsync<T>(url, entity);
-            
-        //    if (response.StatusCode == System.Net.HttpStatusCode.Created) 
-        //        return entity;
+        public async Task<T> Create(string url, T entity)
+        {
+            var response = await _client.PostAsJsonAsync<T>(url, entity);
 
-        //    return null; 
-        //}
+            if (response.StatusCode == System.Net.HttpStatusCode.Created)
+                return entity;
+
+            return null;
+        }
 
         //public async Task<bool> Update(string url, T entity, int id)
         //{

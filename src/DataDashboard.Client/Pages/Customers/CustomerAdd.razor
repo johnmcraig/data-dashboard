@@ -1,0 +1,74 @@
+﻿@page "/customers/add"
+
+@inject NavigationManager NavigationManager
+@inject ICustomerRepository _repo;
+
+<h3>Create A Customer</h3>
+
+<EditForm Model="Model" OnValidSubmit="CreateCustomer">
+
+    <DataAnnotationsValidator />
+
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label for="name">Name</label>
+        <InputText @bind-Value="@Model.Name" class="form-control" id="name" />
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <InputText @bind-Value="@Model.Email" class="form-control" id="email" />
+    </div>
+    <div class="form-group">
+        <label for="state">State</label>
+        <InputText @bind-Value="@Model.State" class="form-control" id="state" />
+    </div>
+
+    <button class="btn btn-primary" type="submit">
+        <span class="oi oi-pencil"></span>
+        Save
+    </button>
+
+    <button @onclick="BackToList" class="btn btn-warning">
+        <span class="oi oi-media-skip-backward"></span>
+        Cancel
+    </button>
+</EditForm>
+
+@code {
+    CustomerModel Model = new CustomerModel();
+
+    private HubConnection hubConnection;
+
+    protected override async Task OnInitializedAsync()
+    {
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("/CustomerHub")).Build();
+
+        await hubConnection.StartAsync();
+    }
+
+    public bool IsConnected => hubConnection.State == HubConnectionState.Connected;
+
+    public void Dispose()
+    {
+        _ = hubConnection.DisposeAsync();
+    }
+
+    public async Task CreateCustomer()
+    {
+        var response = await _repo.Create(Endpoints.CustomersEndpoint, Model);
+        if (IsConnected) await SendMessage();
+        if(response != null)
+        {
+            BackToList();
+        }
+    }
+
+    Task SendMessage() => hubConnection.SendAsync("SendMessage");
+
+    private void BackToList()
+    {
+        NavigationManager.NavigateTo("/customers/");
+    }
+}

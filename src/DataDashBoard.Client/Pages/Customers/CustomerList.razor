@@ -1,8 +1,15 @@
 ﻿@page "/customers"
 
+@inject NavigationManager NavigationManager
+
 @inject ICustomerRepository _repo;
 
 <h3>Customer List</h3>
+
+<a href="/customers/add/" class="btn btn-primary p-2 m-2">
+    <span class="oi oi-pencil"></span>
+    Create A Customer
+</a>
 
 @if (Model == null)
 {
@@ -40,8 +47,39 @@ else
 @code {
     private IList<CustomerModel> Model;
 
+    private HubConnection hubConnection;
+
     protected override async Task OnInitializedAsync()
     {
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("/CustomerHub")).Build();
+
+        hubConnection.On("ReceivedMessage", () =>
+        {
+            CallLoadData();
+            StateHasChanged();
+        });
+
+        await hubConnection.StartAsync();
+        await LoadData();
+    }
+
+    private void CallLoadData()
+    {
+        Task.Run(async () =>
+        {
+            await LoadData();
+        });
+    }
+
+    protected async Task LoadData()
+    {
         Model = await _repo.GetAll(Endpoints.CustomersEndpoint);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        _ = hubConnection.DisposeAsync();
     }
 }
