@@ -83,10 +83,10 @@ namespace DataDashboard.Api.Controllers
 
             await _unitOfWork.Customers.Create(customer);
 
-            return CreatedAtRoute("CreateCustomer", new
+            return Created("CreateCustomer", new
             {
-                id = customer.Id
-            }, customer);
+                customer
+            });
                
         }
     }
