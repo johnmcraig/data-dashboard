@@ -32,7 +32,7 @@ namespace DataDashboard.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAll()
         {
-            _logger.LogInformation($"Attempting to get all customer records");
+            _logger.LogInformation("Attempting to get all records");
 
             try
             {
@@ -42,7 +42,7 @@ namespace DataDashboard.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Could not find records please see the following: {ex.Message}");
+                _logger.LogError($"Could not find any records! Please see the following: {ex.Message}");
                 return BadRequest();
             }
             
