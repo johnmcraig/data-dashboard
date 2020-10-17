@@ -34,20 +34,17 @@ namespace DataDashboard.Infrastructure.Data
             int page = 1;
             int pageSize = 10;
 
-            var query = "SELECT o.*, cus.* FROM \"public\".\"Orders\" AS o " +
+            const string query = "SELECT o.*, cus.* FROM \"public\".\"Orders\" AS o " +
                         "LEFT JOIN \"public\".\"Customers\" AS cus " +
                         "ON o.\"CustomerId\" = cus.\"Id\" " +
                         "ORDER BY o.\"Id\"" +
                         "OFFSET @Offset ROWS " +
                         "FETCH NEXT @PageSize ROWS ONLY";
-
             try
             {
                 using (var connection = new NpgsqlConnection(_config
                     .GetConnectionString(ConnectionString)))
                 {
-                    connection.Open();
-
                     var resultList = await connection.QueryAsync<Order, Customer, Order>
                         (query, (o, cus) =>
                         {
@@ -72,7 +69,7 @@ namespace DataDashboard.Infrastructure.Data
 
         public async Task<Order> GetByIdAsync(int id)
         {
-            var query = "SELECT o.\"Id\", o.\"CustomerId\", o.\"Placed\", o.\"Completed\"," +
+            const string query = "SELECT o.\"Id\", o.\"CustomerId\", o.\"Placed\", o.\"Completed\"," +
                         " o.\"Total\", cus.\"Id\", cus.\"Name\""+
                         "FROM \"public\".\"Orders\" AS o " +
                         "INNER JOIN \"public\".\"Customers\" AS cus " +
@@ -83,8 +80,6 @@ namespace DataDashboard.Infrastructure.Data
                 using (var connection = new NpgsqlConnection(_config
                     .GetConnectionString(ConnectionString)))
                 {
-                    connection.Open();
-
                     var orders = await connection.QueryAsync<Order, Customer, Order>
                         (query, (order, customer) =>
                         {
