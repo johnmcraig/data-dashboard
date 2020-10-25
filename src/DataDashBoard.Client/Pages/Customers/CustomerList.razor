@@ -1,8 +1,8 @@
 ﻿@page "/customers"
 
 @inject NavigationManager NavigationManager
-
-@inject ICustomerRepository _repo;
+@inject HttpClient Http
+@inject ICustomerRepository _repo
 
 <h3>Customer List</h3>
 
@@ -10,6 +10,8 @@
     <span class="oi oi-pencil"></span>
     Create A Customer
 </a>
+<SearchBarComponent OnSearch="HandleSearch" />
+<br/>
 
 @if (Model == null)
 {
@@ -64,6 +66,11 @@ else
         await LoadData();
     }
 
+    private async Task HandleSearch(string search)
+    {
+        Model = await Http.GetFromJsonAsync<IList<CustomerModel>>($"api/customers?search={search}");
+    }
+
     private void CallLoadData()
     {
         Task.Run(async () =>
@@ -74,6 +81,7 @@ else
 
     protected async Task LoadData()
     {
+        await base.OnInitializedAsync();
         Model = await _repo.GetAll(Endpoints.CustomersEndpoint);
         StateHasChanged();
     }
