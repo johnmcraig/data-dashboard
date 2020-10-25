@@ -1,6 +1,4 @@
 using System;
-using System.Linq;
-using DataDashboard.Infrastructure.Data;
 using DataDashboard.Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,31 +12,37 @@ namespace DataDashboard.Api.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly ApiContext _context;
         private readonly ILogger<CustomersController> _logger;
         private readonly IUnitOfWork _unitOfWork;
 
-        public CustomersController(ILogger<CustomersController> logger,
-        IUnitOfWork unitOfWork,
-        ApiContext context)
+        public CustomersController(ILogger<CustomersController> logger, 
+            IUnitOfWork unitOfWork)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
-            _context = context;
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(string search)
         {
             _logger.LogInformation("Attempting to get all records");
 
             try
             {
-                var customers = await _unitOfWork.Customers.ListAllAsync();
+                if (string.IsNullOrWhiteSpace(search))
+                {
+                    var customers = await _unitOfWork.Customers.ListAllAsync();
 
-                return Ok(customers);
+                    return Ok(customers);
+                }
+                else
+                {
+                    var customers = await _unitOfWork.Customers.FindBySearch(search);
+
+                    return Ok(customers);
+                }
             }
             catch (Exception ex)
             {
