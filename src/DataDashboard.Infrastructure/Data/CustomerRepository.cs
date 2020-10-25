@@ -39,6 +39,27 @@ namespace DataDashboard.Infrastructure.Data
             }
         }
 
+        public async Task<IList<Customer>> FindBySearch(string search)
+        {
+            string query = "SELECT * FROM \"public\".\"Customers\" " +
+                           "WHERE \"Name\" ILIKE @Search";
+
+            try
+            {
+                var result = await _dataAccess.LoadData<Customer, dynamic>
+                    (query, new
+                    {
+                        @Search = "%" +  search + "%" 
+                    }, ConnectionString);
+
+                return result.ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public async Task<IList<Customer>> ListAllAsync()
         {
             //int page = 1;
