@@ -13,16 +13,16 @@ using Npgsql;
 
 namespace DataDashboard.Infrastructure.Data
 {
-    public class OrderRepository : IOrderRepository
+    public class OrderNpgsqlRepository : IOrderRepository
     {
         private readonly ISqlDataAccess _dataAccess;
         private const string ConnectionString = "default";
         private readonly IConfiguration _config;
-        private readonly ILogger<OrderRepository> _logger;
+        private readonly ILogger<OrderNpgsqlRepository> _logger;
 
-        public OrderRepository(ISqlDataAccess dataAccess, 
+        public OrderNpgsqlRepository(ISqlDataAccess dataAccess, 
             IConfiguration config,
-            ILogger<OrderRepository> logger)
+            ILogger<OrderNpgsqlRepository> logger)
         {
             _config = config;
             _logger = logger;
