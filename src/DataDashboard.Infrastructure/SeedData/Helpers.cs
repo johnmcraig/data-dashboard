@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace DataDashboard.Infrastructure.SeedData
 {
-    /*
-    <summery>
-    This Helpers.cs class implements pre-defined data to the DataSeed class.
-    The methods include random number generation to make a preset combinations of customer names,
-    email contacts, their resident State, and makes a number of orders with timestamps.
-    </summery>
-     */
+    
+    //<summery>
+    //This Helpers.cs class implements pre-defined data to the DataSeed class.
+    //The methods include random number generation to make a preset combinations of customer names,
+    //email contacts, their resident State, and makes a number of orders with timestamps.
+    //</summery>
+     
     public class Helpers
     {
-        private static Random _rand = new Random();
+        private static readonly Random _rand = new Random();
 
         private static string GetRandom(IList<string> items)
         {
@@ -22,9 +22,9 @@ namespace DataDashboard.Infrastructure.SeedData
         internal static string MakeUniqueCustomerName(List<string> names)
         {
             /* 
-            throw an exception when the list of names is 
-            greater than the maximum number of permutations/combos of 
-            prefixes and suffixes
+                throw an exception when the list of names is 
+                greater than the maximum number of permutations/combos of 
+                prefixes and suffixes
             */
             var maxNames = bizPrefix.Count * bizSuffix.Count;
 
@@ -37,8 +37,7 @@ namespace DataDashboard.Infrastructure.SeedData
             var suffix = GetRandom(bizSuffix);
             var bizName = prefix + suffix;
 
-            //brute force check
-            //dangerous as this is using recursion
+            // brute force check - dangerous as this is using recursion
             if (names.Contains(bizName))
             {
                 MakeUniqueCustomerName(names);
