@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
@@ -10,11 +9,11 @@ using Npgsql;
 
 namespace DataDashboard.Infrastructure.DataAccess
 {
-    public class SqlDataAccess : ISqlDataAccess
+    public class NpgsqlDataAccess : ISqlDataAccess
     {
         private readonly IConfiguration _config;
 
-        public SqlDataAccess(IConfiguration config)
+        public NpgsqlDataAccess(IConfiguration config)
         {
             _config = config;
         }
