@@ -25,11 +25,13 @@ namespace DataDashboard.Api
             {
                 var services = scope.ServiceProvider;
                 var loggerFactory = services.GetRequiredService<ILoggerFactory>();
-
+                
                 try
                 {
                     var dbContext = services.GetRequiredService<ApiContext>();
                     await dbContext.Database.MigrateAsync();
+                    var seedData = new DataSeed(dbContext);
+                    seedData.SeedData(100, 2000);
                 }
                 catch (Exception ex)
                 {
