@@ -334,3 +334,5 @@ ASALocalRun/
 bin/
 obj/
 secretConnectionString.txt
+*.db*
+
