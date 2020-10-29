@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using DataDashboard.Infrastructure.Data;
 using DataDashboard.Core.DataSqlAccess;
 using DataDashboard.Infrastructure.DataAccess;
+using DataDashboard.Infrastructure.SeedData;
 
 namespace DataDashboard.Infrastructure
 {
@@ -10,12 +11,14 @@ namespace DataDashboard.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
-            services.AddScoped<ISqlDataAccess, SqlDataAccess>();
+            services.AddScoped<ISqlDataAccess, SqliteDataAccess>();
             services.AddDbContext<ApiContext>();
 
+            services.AddTransient<DataSeed>();
+
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            services.AddScoped<IOrderRepository, OrderRepository>();
-            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IOrderRepository, OrderSqliteRepository>();
+            services.AddScoped<ICustomerRepository, CustomerSqliteRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
