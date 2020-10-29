@@ -74,9 +74,7 @@ namespace DataDashboard.Infrastructure.SeedData
             //set primary key id and generate the properties in the db
             for (var i = 1; i <= nCustomers; i++)
             {
-                // when we make a customer name, we pass it as a list of names
                 var name = Helpers.MakeUniqueCustomerName(names);
-                //brute force a list of names and states, calling them recusively
                 names.Add(name);
 
                 customers.Add(new Customer
