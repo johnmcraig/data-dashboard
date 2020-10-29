@@ -9,12 +9,12 @@ using DataDashboard.Core.Interfaces;
 
 namespace DataDashboard.Infrastructure.Data
 {
-    internal class CustomerRepository : ICustomerRepository
+    internal class CustomerNpgsqlRepository : ICustomerRepository
     {
         private readonly ISqlDataAccess _dataAccess;
         private const string ConnectionString = "default";
 
-        public CustomerRepository(ISqlDataAccess dataAccess)
+        public CustomerNpgsqlRepository(ISqlDataAccess dataAccess)
         {
             _dataAccess = dataAccess;
         }
