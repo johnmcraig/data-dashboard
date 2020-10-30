@@ -1,0 +1,27 @@
+﻿@page "/servers"
+
+@inject HttpClient Http
+
+<h3>Server List</h3>
+
+@if (Servers == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    @foreach (var server in Servers)
+    {
+        <ServerCardComponent server="server" />
+    }
+}
+
+@code {
+    private IList<ServerModel> Servers { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Servers = await Http.GetFromJsonAsync<IList<ServerModel>>("api/servers");
+    }
+}

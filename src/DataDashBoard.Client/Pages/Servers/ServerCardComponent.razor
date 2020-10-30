@@ -1,0 +1,52 @@
+﻿<style>
+    .block-status {
+        widows: 5;
+        height: 200px;
+        font-size: 1.3em;
+        color: #000;
+        text-align: center;
+        padding: 0 20px;
+        margin: 20px;
+    }
+
+    .status {
+        display: block;
+        transition: 0.3s;
+    }
+
+    .name {
+        padding: 5px;
+        font-size: 0.7em;
+        display: block;
+        font-family: monospace;
+        transition: 0.3s;
+    }
+
+    .action {
+        display: block;
+        font-size: 0.7em;
+        margin-top: 12px;
+        transition: 0.3s;
+    }
+</style>
+
+@if (this.server != null)
+{
+    <div class="card mb-3 shadow block-status">
+        <div class="card-header name">
+                @server.Name
+        </div>
+        <div class="card-body status">
+                @server.IsOnline
+        </div>
+            @*<button (click)="toggleStatus(serverInput.isOnline)"
+                    class="btn bnt-default action">
+                {{ buttonText }}
+            </button>*@
+    </div>
+}
+
+@code {
+    [Parameter]
+    public ServerModel server { get; set; }
+}
