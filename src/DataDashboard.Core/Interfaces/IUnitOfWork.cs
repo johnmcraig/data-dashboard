@@ -6,5 +6,6 @@ namespace DataDashboard.Core.Interfaces
     {
         IOrderRepository Orders { get; }
         ICustomerRepository Customers { get; }
+        IServerRepository Servers { get; }
     }
 }
