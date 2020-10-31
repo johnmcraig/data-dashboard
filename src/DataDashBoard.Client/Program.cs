@@ -28,6 +28,7 @@ namespace DataDashboard.Client
             builder.Services.AddTransient(typeof(IRepositoryBase<>), typeof(RepositoryService<>));
             builder.Services.AddTransient<IOrderRepository, OrderService>();
             builder.Services.AddTransient<ICustomerRepository, CustomerService>();
+            builder.Services.AddTransient<IServerRepository, ServerService>();
 
             builder.Services.AddOptions();
             
