@@ -19,6 +19,7 @@ namespace DataDashboard.Infrastructure
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IOrderRepository, OrderSqliteRepository>();
             services.AddScoped<ICustomerRepository, CustomerSqliteRepository>();
+            services.AddScoped<IServerRepository, ServerSqliteRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
