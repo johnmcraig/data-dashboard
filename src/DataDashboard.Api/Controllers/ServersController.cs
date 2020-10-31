@@ -1,7 +1,10 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using DataDashboard.Core.Entities;
+using DataDashboard.Core.Interfaces;
 using DataDashboard.Infrastructure.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -11,35 +14,39 @@ namespace DataDashboard.Api.Controllers
     [ApiController]
     public class ServersController : ControllerBase
     {
-        private readonly ApiContext _context;
+        private readonly IUnitOfWork _unitOfWork;
         ILogger<ServersController> _logger;
 
-        public ServersController(ApiContext context, ILogger<ServersController> logger)
+        public ServersController(IUnitOfWork unitOfWork, ILogger<ServersController> logger)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
             _logger = logger;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAll()
         {
-            var response = _context.Servers.OrderBy(s => s.Id).ToList();
+            var response = await _unitOfWork.Servers.ListAllAsync();
 
             return Ok(response);
         }
 
-        [HttpGet("{id}", Name = "GetServer")]
-        public IActionResult Get(int id)
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult GetById(int id)
         {
-            var response = _context.Servers.Find(id);
+            var response = _unitOfWork.Servers.GetByIdAsync(id);
             return Ok(response);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Message(int id, [FromForm] ServerMessage msg)
+        public async Task<IActionResult> Message(int id, [FromForm] ServerMessage msg)
         {
-            var server = _context.Servers.Find(id);
-
+            var server = await _unitOfWork.Servers.GetByIdAsync(id);
+            
             if (server == null)
             {
                 return NotFound();
@@ -56,7 +63,7 @@ namespace DataDashboard.Api.Controllers
                 server.IsOnline = false;
             }
 
-            _context.SaveChanges();
+            //_context.SaveChanges();
             return new NoContentResult();
         }
     }
