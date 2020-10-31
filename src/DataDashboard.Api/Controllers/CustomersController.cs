@@ -57,13 +57,13 @@ namespace DataDashboard.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetById(int id)
         {
-            _logger.LogInformation($"Attempting to get a singe customer record");
+            _logger.LogInformation($"Attempting to get a single customer record");
+
             try
             {
                 var customer = await _unitOfWork.Customers.GetByIdAsync(id);
                 
-                if (customer == null)
-                    return NotFound();
+                if (customer == null) return NotFound();
 
                 return Ok(customer);
             }
