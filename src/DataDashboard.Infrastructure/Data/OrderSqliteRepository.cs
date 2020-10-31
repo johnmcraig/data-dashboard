@@ -69,12 +69,12 @@ namespace DataDashboard.Infrastructure.Data
 
         public async Task<Order> GetByIdAsync(int id)
         {
-            const string query = "SELECT o.Id, o.CustomerId, o.Placed, o.Completed," +
-                        " o.Total, cus.Id, cus.Name" +
-                        "FROM Orders AS o " +
-                        "INNER JOIN Customers AS cus " +
-                        "ON o.CustomerId = cus.Id " +
-                        "WHERE o.Id = @Id";
+            const string query = "SELECT o.Id, o.CustomerId, o.Placed, o.Completed, " +
+                                "o.Total, cus.Id, cus.Name " +
+                                "FROM Orders AS o " +
+                                "INNER JOIN Customers AS cus " +
+                                "ON o.CustomerId = cus.Id " +
+                                "WHERE o.Id = @Id";
             try
             {
                 using (var connection = new SqliteConnection(_config
