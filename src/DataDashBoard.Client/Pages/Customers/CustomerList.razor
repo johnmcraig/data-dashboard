@@ -2,7 +2,7 @@
 
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
-@inject ICustomerRepository _repo
+@inject ICustomerRepository CustomerRepo
 
 <h3>Customer List</h3>
 
@@ -49,21 +49,42 @@ else
 @code {
     private IList<CustomerModel> Model;
 
-    private HubConnection hubConnection;
+    private HubConnection _hubConnection;
 
     protected override async Task OnInitializedAsync()
     {
-        hubConnection = new HubConnectionBuilder()
-            .WithUrl(NavigationManager.ToAbsoluteUri("/CustomerHub")).Build();
+        await base.OnInitializedAsync();
+        await StartHubConnection();
+        Model = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint);
+        AddDataListener();
+        StateHasChanged();
+    }
 
-        hubConnection.On("ReceivedMessage", () =>
+    private async Task StartHubConnection()
+    {
+        _hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("/customerhub"))
+            .Build();
+
+        await _hubConnection.StartAsync();
+        if (_hubConnection.State == HubConnectionState.Connected)
         {
-            CallLoadData();
+            Console.WriteLine("connection started");
+        }
+    }
+
+    private void AddDataListener()
+    {
+        _hubConnection.On<IList<CustomerModel>>("customerhub", (data) =>
+        {
+            foreach (var item in data)
+            {
+                Console.WriteLine($"Name: {item.Name}, Email: {item.Email}");
+            }
+
+            Model = data;
             StateHasChanged();
         });
-
-        await hubConnection.StartAsync();
-        await LoadData();
     }
 
     private async Task HandleSearch(string search)
@@ -71,23 +92,23 @@ else
         Model = await Http.GetFromJsonAsync<IList<CustomerModel>>($"api/customers?search={search}");
     }
 
-    private void CallLoadData()
-    {
-        Task.Run(async () =>
-        {
-            await LoadData();
-        });
-    }
+    //private void CallLoadData()
+    //{
+    //    Task.Run(async () =>
+    //    {
+    //        await LoadData();
+    //    });
+    //}
 
-    protected async Task LoadData()
-    {
-        await base.OnInitializedAsync();
-        Model = await _repo.GetAll(Endpoints.CustomersEndpoint);
-        StateHasChanged();
-    }
+    //protected async Task LoadData()
+    //{
+    //    await base.OnInitializedAsync();
+    //    Model = await _repo.GetAll(Endpoints.CustomersEndpoint);
+    //    StateHasChanged();
+    //}
 
     public void Dispose()
     {
-        _ = hubConnection.DisposeAsync();
+        _hubConnection.DisposeAsync();
     }
 }
