@@ -43,7 +43,7 @@
     protected override async Task OnInitializedAsync()
     {
         hubConnection = new HubConnectionBuilder()
-            .WithUrl(NavigationManager.ToAbsoluteUri("/CustomerHub")).Build();
+            .WithUrl(NavigationManager.ToAbsoluteUri("/customerhub")).Build();
 
         await hubConnection.StartAsync();
     }
@@ -65,7 +65,7 @@
         }
     }
 
-    Task SendMessage() => hubConnection.SendAsync("SendMessage");
+    Task SendMessage() => hubConnection.SendAsync("Message");
 
     private void BackToList()
     {
