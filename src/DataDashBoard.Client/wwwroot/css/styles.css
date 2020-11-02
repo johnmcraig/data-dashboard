@@ -1,4 +1,6 @@
-﻿* {
+﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+
+* {
     box-sizing: border-box;
 }
 
@@ -35,23 +37,23 @@ a {
     border-radius: 2px;
 }
 
-.card-heading-theme {
+.card-heading {
     color: #eee;
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
     padding: 12px;
 }
 
-/* .card-body {
+ .card-body {
   background-color: rgb(40, 44, 54);
-} */
+} 
 
 .cards {
     display: flex;
     flex-direction: column;
 }
 
-#sideBar {
+.sidebar {
     height: 100vh;
     padding-top: 80px;
     position: fixed;
@@ -62,7 +64,7 @@ a {
     margin-top: 60px;
 }
 
-#navbar {
+.navbar {
     background-color: #161A1E !important;
     box-shadow: 0 3px 6px rgba(0,0,0,0.2), 0 3px 6px rgba(0,0,0,0.25);
 }
