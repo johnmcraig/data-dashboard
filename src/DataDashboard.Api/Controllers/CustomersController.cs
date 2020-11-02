@@ -5,6 +5,8 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using DataDashboard.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
+using DataDashboard.Api.Hubs;
 
 namespace DataDashboard.Api.Controllers
 {
@@ -14,12 +16,14 @@ namespace DataDashboard.Api.Controllers
     {
         private readonly ILogger<CustomersController> _logger;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IHubContext<CustomerHub> _customerHub;
 
         public CustomersController(ILogger<CustomersController> logger, 
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork, IHubContext<CustomerHub> customerHub)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
+            _customerHub = customerHub;
         }
 
         [HttpGet]
@@ -33,6 +37,11 @@ namespace DataDashboard.Api.Controllers
             {
                 if (string.IsNullOrWhiteSpace(search))
                 {
+                    // await _customerHub.Clients.All.SendAsync("GetAll",
+                    //    _unitOfWork.Customers.ListAllAsync());
+
+                    //return Ok(new { Message = "Request completed" });
+
                     var customers = await _unitOfWork.Customers.ListAllAsync();
 
                     return Ok(customers);
@@ -87,8 +96,11 @@ namespace DataDashboard.Api.Controllers
 
             await _unitOfWork.Customers.Create(customer);
 
+            await _customerHub.Clients.All.SendAsync("CreateCustomer");
+
             return Created("CreateCustomer", new
             {
+                Message = "Request completed",
                 customer
             });
                
