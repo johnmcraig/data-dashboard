@@ -77,7 +77,7 @@ namespace DataDashboard.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<CustomerHub>("/CustomerHub");
+                endpoints.MapHub<CustomerHub>("/customerhub");
                 endpoints.MapFallbackToFile("index.html");
             });
         }
