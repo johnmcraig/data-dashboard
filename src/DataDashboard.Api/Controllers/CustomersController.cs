@@ -66,7 +66,7 @@ namespace DataDashboard.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetById(int id)
         {
-            _logger.LogInformation($"Attempting to get a single customer record");
+            _logger.LogInformation("Attempting to get a single customer record");
 
             try
             {
