@@ -23,7 +23,6 @@ else
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        //Servers = await Http.GetFromJsonAsync<IList<ServerModel>>("api/servers");
         Servers = await _repo.GetAll(Endpoints.ServersEndpoint);
     }
 }
