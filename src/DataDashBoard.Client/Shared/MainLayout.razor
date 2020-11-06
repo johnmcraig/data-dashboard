@@ -1,5 +1,21 @@
 ﻿@inherits LayoutComponentBase
 
+@*<Navbar />
+
+<div class="container-fluid">
+
+    <div class="row" id="mainContent">
+
+        <SideBar />
+
+        <div class="col-sm-9 ml-sm-auto col-md-10 pt-3" id="dashboard">
+            <div class="section-container">
+                @Body
+            </div>
+        </div>
+
+    </div>
+</div>*@
 <div class="sidebar">
     <NavMenu />
 </div>
