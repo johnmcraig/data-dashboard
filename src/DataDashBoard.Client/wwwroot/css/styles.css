@@ -44,7 +44,7 @@ a {
     padding: 12px;
 }
 
- .card-body {
+.card-body {
   background-color: rgb(40, 44, 54);
 } 
 
@@ -53,7 +53,7 @@ a {
     flex-direction: column;
 }
 
-.sidebar {
+#sideBar {
     height: 100vh;
     padding-top: 80px;
     position: fixed;
