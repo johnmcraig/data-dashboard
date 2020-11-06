@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using DataDashboard.Core.Entities;
 using DataDashboard.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataDashboard.Infrastructure.Data
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
         private readonly ApiContext _context;
 
