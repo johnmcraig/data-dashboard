@@ -5,9 +5,9 @@ namespace DataDashboard.Infrastructure.SeedData
 {
     
     //<summery>
-    //This Helpers.cs class implements pre-defined data to the DataSeed class.
-    //The methods include random number generation to make a preset combinations of customer names,
-    //email contacts, their resident State, and makes a number of orders with timestamps.
+    // This Helpers class implements pre-defined data to the DataSeed class.
+    // The methods include random number generation to make a preset combinations of customer names,
+    // email contacts, their resident State, and makes a number of orders with timestamps.
     //</summery>
      
     public class Helpers
@@ -21,11 +21,6 @@ namespace DataDashboard.Infrastructure.SeedData
 
         internal static string MakeUniqueCustomerName(List<string> names)
         {
-            /* 
-                throw an exception when the list of names is 
-                greater than the maximum number of permutations/combos of 
-                prefixes and suffixes
-            */
             var maxNames = bizPrefix.Count * bizSuffix.Count;
 
             if (names.Count == maxNames)
@@ -37,7 +32,6 @@ namespace DataDashboard.Infrastructure.SeedData
             var suffix = GetRandom(bizSuffix);
             var bizName = prefix + suffix;
 
-            // brute force check - dangerous as this is using recursion
             if (names.Contains(bizName))
             {
                 MakeUniqueCustomerName(names);
@@ -53,7 +47,7 @@ namespace DataDashboard.Infrastructure.SeedData
 
         internal static string GetRandomState()
         {
-            return GetRandom(usStates);
+            return GetRandom(States);
         }
 
         internal static decimal GetRandomOrderTotal()
@@ -63,7 +57,7 @@ namespace DataDashboard.Infrastructure.SeedData
 
         internal static DateTime GetRandomOrderPlaced()
         {
-            var end = DateTime.Now;
+            var end = DateTime.UtcNow;
             var start = end.AddDays(-90);
 
             TimeSpan possibleSpan = end - start;
@@ -74,7 +68,7 @@ namespace DataDashboard.Infrastructure.SeedData
 
         internal static DateTime? GetRandomOrderCompleted(DateTime orderPlaced)
         {
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
             var minLeadTime = TimeSpan.FromDays(7);
             var timePassed = now - orderPlaced;
 
@@ -86,7 +80,7 @@ namespace DataDashboard.Infrastructure.SeedData
             return orderPlaced.AddDays(_rand.Next(7, 14));
         }
 
-        private static readonly List<string> usStates = new List<string>()
+        private static readonly List<string> States = new List<string>()
         {
             "AL",
             "AK",

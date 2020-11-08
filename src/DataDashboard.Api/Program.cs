@@ -29,8 +29,8 @@ namespace DataDashboard.Api
                 try
                 {
                     var dbContext = services.GetRequiredService<ApiContext>();
+                    var seedData = services.GetRequiredService<DataSeed>();
                     await dbContext.Database.MigrateAsync();
-                    var seedData = new DataSeed(dbContext);
                     seedData.SeedData(100, 2000);
                 }
                 catch (Exception ex)
