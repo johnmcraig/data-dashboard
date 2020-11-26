@@ -28,7 +28,7 @@ namespace DataDashboard.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
         {
             _logger.LogInformation("Attempting to get all orders");
 
@@ -36,7 +36,7 @@ namespace DataDashboard.Api.Controllers
             {
                 var orders = await _unitOfWork.Orders.ListAllAsync();
 
-                _logger.LogInformation("Successfully retreived all records");
+                _logger.LogInformation("Successfully retrieved all records");
 
                 return Ok(orders);
             }
