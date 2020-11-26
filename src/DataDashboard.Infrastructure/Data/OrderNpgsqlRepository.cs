@@ -31,8 +31,37 @@ namespace DataDashboard.Infrastructure.Data
 
         public async Task<IList<Order>> ListAllAsync()
         {
-            int page = 1;
-            int pageSize = 10;
+            const string query = "SELECT o.*, cus.* FROM \"public\".\"Orders\" AS o " +
+                        "LEFT JOIN \"public\".\"Customers\" AS cus " +
+                        "ON o.\"CustomerId\" = cus.\"Id\" " +
+                        "ORDER BY o.\"Id\"";
+            try
+            {
+                using (var connection = new NpgsqlConnection(_config
+                    .GetConnectionString(ConnectionString)))
+                {
+                    var resultList = await connection.QueryAsync<Order, Customer, Order>
+                        (query, (o, cus) =>
+                        {
+                            o.Customer = cus;
+                            return o;
+                        },
+                        new 
+                        {
+                        }, splitOn: "Id");
+
+                    return resultList.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error:{ex}");
+                throw;
+            }
+        }
+
+        public async Task<IList<Order>> ListAllWithPaging(int page, int pageSize)
+        {
 
             const string query = "SELECT o.*, cus.* FROM \"public\".\"Orders\" AS o " +
                         "LEFT JOIN \"public\".\"Customers\" AS cus " +
