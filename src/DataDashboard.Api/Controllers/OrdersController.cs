@@ -28,13 +28,14 @@ namespace DataDashboard.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
+        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 20)
         {
             _logger.LogInformation("Attempting to get all orders");
 
             try
             {
-                var orders = await _unitOfWork.Orders.ListAllAsync();
+                var orders = await _unitOfWork.Orders.ListAllWithPaging(page, pageSize);
+                // var orders = await _unitOfWork.Orders.ListAllAsync();
 
                 _logger.LogInformation("Successfully retrieved all records");
 
