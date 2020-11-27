@@ -82,8 +82,8 @@ namespace DataDashboard.Infrastructure.Data
                         },
                         new 
                         {
-                            Offset = (page - 1) * pageSize,
-                            PageSize = pageSize
+                            @Offset = (page - 1) * pageSize,
+                            @PageSize = pageSize
                         }, splitOn: "Id");
 
                     return resultList.ToList();
