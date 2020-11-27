@@ -65,9 +65,8 @@ namespace DataDashboard.Infrastructure.Data
             const string query = "SELECT o.*, cus.* FROM Orders AS o " +
                                  "LEFT JOIN Customers AS cus " +
                                  "ON o.CustomerId = cus.Id " +
-                                 "ORDER BY o.Placed" +
-                                 "OFFSET @Offset ROWS " +
-                                 "FETCH NEXT @PageSize ROWS ONLY";
+                                 "ORDER BY o.Placed " + 
+                                 "LIMIT @PageSize OFFSET @Offset";
             try
             {
                 using (var connection = new SqliteConnection(_config
@@ -81,8 +80,8 @@ namespace DataDashboard.Infrastructure.Data
                         },
                         new
                         {
-                            Offset = (page - 1) * pageSize,
-                            PageSize = pageSize
+                            @Offset = (page - 1) * pageSize,
+                            @PageSize = pageSize
                         }, splitOn: "Id");
 
                     return resultList.ToList();
