@@ -35,7 +35,6 @@ namespace DataDashboard.Api.Controllers
             try
             {
                 var orders = await _unitOfWork.Orders.ListAllWithPaging(page, pageSize);
-                // var orders = await _unitOfWork.Orders.ListAllAsync();
 
                 _logger.LogInformation("Successfully retrieved all records");
 
