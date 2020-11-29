@@ -14,7 +14,7 @@ namespace DataDashboard.Client.Pages.Customers
     {
         private HubConnection _hubConnection;
 
-        public IList<CustomerModel> Model = new List<CustomerModel>();
+        public IList<CustomerModel> Customers = new List<CustomerModel>();
 
         [Inject]
         public ICustomerRepository CustomerRepo { get; set; }
@@ -24,7 +24,6 @@ namespace DataDashboard.Client.Pages.Customers
             await StartHubConnection();
             await CustomerRepo.GetAll(Endpoints.CustomersEndpoint);
             AddDataListener();
-            //StateHasChanged();
         }
 
         private async Task StartHubConnection()
@@ -49,8 +48,7 @@ namespace DataDashboard.Client.Pages.Customers
                     Console.WriteLine($"Name: {item.Name}, Email: {item.Email}");
                 }
 
-                Model = data;
-                //StateHasChanged();
+                Customers = data;
             });
         }
 

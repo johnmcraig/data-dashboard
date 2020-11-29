@@ -10,10 +10,11 @@
     <span class="oi oi-pencil"></span>
     Create A Customer
 </a>
+
 <SearchBarComponent OnSearch="HandleSearch" />
 <br/>
 
-@if (Model == null)
+@if (Customers == null)
 {
     <p>Loading...</p>
 }
@@ -29,7 +30,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var customer in Model)
+            @foreach (var customer in Customers)
             {
                 <tr>
                     <td scope="row">@customer.Name</td>
@@ -47,7 +48,7 @@ else
 }
 
 @code {
-    private IList<CustomerModel> Model;
+    private IList<CustomerModel> Customers;
 
     private HubConnection _hubConnection;
 
@@ -55,7 +56,7 @@ else
     {
         await base.OnInitializedAsync();
         await StartHubConnection();
-        Model = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint);
+        Customers = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint);
         AddDataListener();
         StateHasChanged();
     }
@@ -82,30 +83,15 @@ else
                 Console.WriteLine($"Name: {item.Name}, Email: {item.Email}");
             }
 
-            Model = data;
+            Customers = data;
             StateHasChanged();
         });
     }
 
     private async Task HandleSearch(string search)
     {
-        Model = await Http.GetFromJsonAsync<IList<CustomerModel>>($"api/customers?search={search}");
+        Customers = await Http.GetFromJsonAsync<IList<CustomerModel>>($"api/customers?search={search}");
     }
-
-    //private void CallLoadData()
-    //{
-    //    Task.Run(async () =>
-    //    {
-    //        await LoadData();
-    //    });
-    //}
-
-    //protected async Task LoadData()
-    //{
-    //    await base.OnInitializedAsync();
-    //    Model = await _repo.GetAll(Endpoints.CustomersEndpoint);
-    //    StateHasChanged();
-    //}
 
     public void Dispose()
     {
