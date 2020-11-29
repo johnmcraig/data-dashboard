@@ -4,15 +4,28 @@
 
 <h3>Order(s) List</h3>
 
-<div>
-    <button @onclick="ResetToFirstPage"><span class="oi oi-action-undo"></span>First Page</button>
+<nav class="pagination justify-content-center mb-2">
+    <button class="page-link" @onclick="ResetToFirstPage">
+        <span class="oi oi-media-skip-backward"></span>
+        First Page
+    </button>
+
     @if (PageNumber > 1)
     {
-        <button @onclick="Previous"><span class="oi oi-media-step-backward"></span>Previous</button>
+        <button class="page-link" @onclick="Previous">
+            <span class="oi oi-arrow-circle-left"></span>
+        Previous
+        </button>
     }
-    <button @onclick="Next"><span class="oi oi-media-step-forward"></span>Next Page</button>
-    <button @onclick="GoToLastPage"><span class="oi oi-action-redo"></span>Last Page</button>
-</div>
+
+    <button class="page-link" @onclick="Next">Next
+        <span class="oi oi-arrow-circle-right"></span>
+    </button>
+
+    <button class="page-link" @onclick="GoToLastPage">Last Page 
+        <span class="oi oi-media-skip-forward"></span>
+    </button>
+</nav>
 
 @if (Orders == null)
 {
@@ -58,15 +71,30 @@ else
         </tbody>
     </table>
 
-    <div>
-        <button @onclick="ResetToFirstPage"><span class="oi oi-action-undo"></span>First Page</button>
+    <nav class="pagination justify-content-center mb-2">
+        <button class="page-link" @onclick="ResetToFirstPage">
+            <span class="oi oi-media-skip-backward"></span>
+            First Page
+        </button>
+
         @if (PageNumber > 1)
         {
-            <button @onclick="Previous"><span class="oi oi-media-step-backward"></span>Previous</button>
+            <button class="page-link" @onclick="Previous">
+                <span class="oi oi-arrow-circle-left"></span>
+                Previous
+            </button>
         }
-        <button @onclick="Next"><span class="oi oi-media-step-forward"></span>Next Page</button>
-        <button @onclick="GoToLastPage"><span class="oi oi-action-redo"></span>Last Page</button>
-    </div>
+
+        <button class="page-link" @onclick="Next">
+            Next
+            <span class="oi oi-arrow-circle-right"></span>
+        </button>
+
+        <button class="page-link" @onclick="GoToLastPage">
+            Last Page
+            <span class="oi oi-media-skip-forward"></span>
+        </button>
+    </nav>
 
 }
 
