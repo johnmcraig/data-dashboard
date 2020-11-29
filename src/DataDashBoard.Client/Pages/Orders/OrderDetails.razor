@@ -1,6 +1,7 @@
 ﻿@page "/orders/details/{Id:int}"
 
-@inject IOrderRepository _orderRepo;
+@inject IOrderRepository _orderRepo
+@inject NavigationManager NavManager
 
 <h3>Order Details</h3>
 
@@ -54,6 +55,11 @@ else
     </div>
 }
 
+<button @onclick="BackToList" class="btn btn-secondary">
+    <span class="oi oi-media-skip-backward"></span>
+    Back To List
+</button>
+
 @code {
     [Parameter]
     public int Id { get; set; }
@@ -63,5 +69,10 @@ else
     protected override async Task OnInitializedAsync()
     {
         Model = await _orderRepo.GetSingle(Endpoints.OrdersEndpoint, Id);
+    }
+
+    private void BackToList()
+    {
+        NavManager.NavigateTo("/orders");
     }
 }
