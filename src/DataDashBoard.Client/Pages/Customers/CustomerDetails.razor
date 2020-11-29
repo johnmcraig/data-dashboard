@@ -1,6 +1,7 @@
 ﻿@page "/customers/details/{Id:int}"
 
 @inject ICustomerRepository _repo
+@inject NavigationManager NavManager
 
 <h3>Customer Details</h3>
 
@@ -29,6 +30,11 @@ else
         </div>
 }
 
+<button @onclick="BackToList" class="btn btn-secondary">
+    <span class="oi oi-media-skip-backward"></span>
+    Back To List
+</button>
+
 @code {
     [Parameter]
     public int Id { get; set; }
@@ -38,5 +44,10 @@ else
     protected override async Task OnInitializedAsync()
     {
         Model = await _repo.GetSingle(Endpoints.CustomersEndpoint, Id);
+    }
+
+    private void BackToList()
+    {
+        NavManager.NavigateTo("/customers");
     }
 }
