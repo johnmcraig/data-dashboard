@@ -2,9 +2,19 @@
 
 @inject IOrderRepository _repo
 
-<h3>Order List</h3>
+<h3>Order(s) List</h3>
 
-@if (Model == null)
+<div>
+    <button @onclick="ResetToFirstPage"><span class="oi oi-action-undo"></span>First Page</button>
+    @if (PageNumber > 1)
+    {
+        <button @onclick="Previous"><span class="oi oi-media-step-backward"></span>Previous</button>
+    }
+    <button @onclick="Next"><span class="oi oi-media-step-forward"></span>Next Page</button>
+    <button @onclick="GoToLastPage"><span class="oi oi-action-redo"></span>Last Page</button>
+</div>
+
+@if (Orders == null)
 {
     <p>Loading...</p>
 }
@@ -21,7 +31,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var order in Model)
+            @foreach (var order in Orders)
             {
             <tr>
                 <td>@order.Placed</td>
@@ -46,15 +56,58 @@ else
             }
         </tbody>
     </table>
-    
+
+    <div>
+        <button @onclick="ResetToFirstPage"><span class="oi oi-action-redo"></span>First Page</button>
+        @if (PageNumber > 1)
+        {
+            <button @onclick="Previous"><span class="oi oi-media-step-backward"></span>Previous</button>
+        }
+        <button @onclick="Next"><span class="oi oi-media-step-forward"></span>Next Page</button>
+        <button @onclick="GoToLastPage"><span class="oi oi-action-undo"></span>Last Page</button>
+    </div>
+
 }
 
 @code {
-    private IList<OrderModel> Model;
+    private IList<OrderModel> Orders;
+
+    int PageNumber = 1;
+    int PageSize = 20;
 
     protected override async Task OnInitializedAsync()
     {
-       Model = await _repo.GetAll(Endpoints.OrdersEndpoint);
+        Orders = await _repo.GetAll(Endpoints.OrdersEndpoint);
+    }
+
+    private async Task Next()
+    {
+        PageNumber++;
+        var response = await _repo.GetAll(Endpoints.OrdersEndpoint + $"?page={PageNumber}&pageSize={PageSize}");
+        Orders = response;
+    }
+
+    private async Task Previous()
+    {
+        PageNumber--;
+        var response = await _repo.GetAll(Endpoints.OrdersEndpoint + $"?page={PageNumber}&pageSize={PageSize}");
+        Orders = response;
+    }
+
+    private async Task ResetToFirstPage()
+    {
+        PageNumber = 1;
+        var response = await _repo.GetAll(Endpoints.OrdersEndpoint + $"?page={PageNumber}&pageSize={PageSize}");
+        Orders = response;
+        StateHasChanged();
+    }
+
+    private async Task GoToLastPage()
+    {
+        PageNumber = 100;
+        var response = await _repo.GetAll(Endpoints.OrdersEndpoint + $"?page={PageNumber}&pageSize={PageSize}");
+        Orders = response;
+        StateHasChanged();
     }
 
 }
