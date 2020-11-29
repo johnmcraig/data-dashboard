@@ -1,0 +1,41 @@
+﻿<div>
+    <button @onclick="ResetToFirstPage"><span class="oi oi-action-undo"></span>First Page</button>
+    @if (PageNumber > 1)
+    {
+        <button @onclick="PreviousPage"><span class="oi oi-media-step-backward"></span>Previous</button>
+    }
+    <button @onclick="NextPage"><span class="oi oi-media-step-forward"></span>Next Page</button>
+    <button @onclick="GoToLastPage"><span class="oi oi-action-redo"></span>Last Page</button>  
+</div>
+
+@code {
+    protected int PageNumber { get; set; }
+
+    [Parameter]
+    public EventCallback<int> OnPageChange { get; set; }
+
+    protected void NextPage()
+    {
+        PageNumber++;
+    }
+
+    protected void PreviousPage()
+    {
+        PageNumber--;
+    }
+
+    protected void ResetToFirstPage()
+    {
+        PageNumber = 1;
+    }
+
+    protected void GoToLastPage()
+    {
+        PageNumber = 100;
+    }
+
+    protected async Task HandlePaging()
+    {
+        await OnPageChange.InvokeAsync(PageNumber);
+    }
+}
