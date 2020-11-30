@@ -80,7 +80,7 @@ namespace DataDashboard.Infrastructure.Data
 
         public async Task<IList<Customer>> ListAllWithPaging(int page, int pageSize)
         {
-            const string query = "SELECT * FROM Customers" +
+            const string query = "SELECT * FROM Customers " +
                                  "LIMIT @PageSize OFFSET @Offset ";
 
             try
@@ -102,7 +102,7 @@ namespace DataDashboard.Infrastructure.Data
 
         public async Task<IList<Customer>> ListAllWithSearchingAndPaging(string search, int page, int pageSize)
         {
-            const string query = "SELECT * FROM ( SELECT * FROM Customers WHERE Name LIKE @Search ) Sub" +
+            const string query = "SELECT * FROM Customers WHERE Name LIKE @Search " +
                                  "ORDER BY Id LIMIT @PageSize OFFSET @Offset";
 
             try
