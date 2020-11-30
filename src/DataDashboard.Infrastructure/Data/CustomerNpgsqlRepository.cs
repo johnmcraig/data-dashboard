@@ -62,20 +62,62 @@ namespace DataDashboard.Infrastructure.Data
 
         public async Task<IList<Customer>> ListAllAsync()
         {
-            //int page = 1;
-            //int pageSize = 10;
-
             const string query = "SELECT * FROM \"public\".\"Customers\" "; 
-                        //"OFFSET @Offset ROWS " +
-                        //"FETCH NEXT @PageSize ROWS ONLY";
 
             try
             {
                 var customers = await _dataAccess.LoadData<Customer, dynamic>
                     (query, new 
                     {
-                        //Offset = (page - 1) * pageSize,
-                        //PageSize = pageSize
+                    }, ConnectionString);
+
+                return customers.ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<IList<Customer>> ListAllWithPaging(int page, int pageSize)
+        {
+
+            const string query = "SELECT * FROM \"public\".\"Customers\" " +
+                                 "OFFSET @Offset ROWS " +
+                                 "FETCH NEXT @PageSize ROWS ONLY";
+
+            try
+            {
+                var customers = await _dataAccess.LoadData<Customer, dynamic>
+                    (query, new
+                    {
+                        @Offset = (page - 1) * pageSize,
+                        @PageSize = pageSize
+                    }, ConnectionString);
+
+                return customers.ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<IList<Customer>> ListAllWithSearchingAndPaging(string search, int page, int pageSize)
+        {
+
+            const string query = "SELECT * FROM ( SELECT * FROM \"public\".\"Customers\" WHERE \"Name\" ILIKE  @Search ) Sub" +
+                                 "ORDER BY \"Id\" OFFSET @Offset ROWS " +
+                                 "FETCH NEXT @PageSize ROWS ONLY";
+
+            try
+            {
+                var customers = await _dataAccess.LoadData<Customer, dynamic>
+                    (query, new
+                    {
+                        @Search = "%" + search + "%",
+                        @Offset = (page - 1) * pageSize,
+                        @PageSize = pageSize
                     }, ConnectionString);
 
                 return customers.ToList();
