@@ -29,7 +29,7 @@ namespace DataDashboard.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAll(string search)
+        public async Task<IActionResult> GetAll(string search, int page = 1, int pageSize = 20)
         {
             _logger.LogInformation("Attempting to get all records");
 
@@ -37,18 +37,13 @@ namespace DataDashboard.Api.Controllers
             {
                 if (string.IsNullOrWhiteSpace(search))
                 {
-                    // await _customerHub.Clients.All.SendAsync("GetAll",
-                    //    _unitOfWork.Customers.ListAllAsync());
-
-                    //return Ok(new { Message = "Request completed" });
-
-                    var customers = await _unitOfWork.Customers.ListAllAsync();
+                    var customers = await _unitOfWork.Customers.ListAllWithPaging(page, pageSize);
 
                     return Ok(customers);
                 }
                 else
                 {
-                    var customers = await _unitOfWork.Customers.FindBySearch(search);
+                    var customers = await _unitOfWork.Customers.ListAllWithSearchingAndPaging(search, page, pageSize);
 
                     return Ok(customers);
                 }
