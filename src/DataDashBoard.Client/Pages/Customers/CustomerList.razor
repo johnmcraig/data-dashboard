@@ -12,7 +12,32 @@
 </a>
 
 <SearchBarComponent OnSearch="HandleSearch" />
-<br/>
+<br />
+
+<nav class="pagination justify-content-center mb-2">
+    <button class="page-link" @onclick="ResetToFirstPage">
+        <span class="oi oi-media-skip-backward"></span>
+        First Page
+    </button>
+
+    @if (PageNumber > 1)
+    {
+        <button class="page-link" @onclick="Previous">
+            <span class="oi oi-arrow-circle-left"></span>
+            Previous
+        </button>
+    }
+
+    <button class="page-link" @onclick="Next">
+        Next
+        <span class="oi oi-arrow-circle-right"></span>
+    </button>
+
+    <button class="page-link" @onclick="GoToLastPage">
+        Last Page
+        <span class="oi oi-media-skip-forward"></span>
+    </button>
+</nav>
 
 @if (Customers == null)
 {
@@ -45,12 +70,40 @@ else
             }
         </tbody>
     </table>
+
+    <nav class="pagination justify-content-center mb-2">
+        <button class="page-link" @onclick="ResetToFirstPage">
+            <span class="oi oi-media-skip-backward"></span>
+            First Page
+        </button>
+
+        @if (PageNumber > 1)
+        {
+            <button class="page-link" @onclick="Previous">
+                <span class="oi oi-arrow-circle-left"></span>
+                Previous
+            </button>
+        }
+
+        <button class="page-link" @onclick="Next">
+            Next
+            <span class="oi oi-arrow-circle-right"></span>
+        </button>
+
+        <button class="page-link" @onclick="GoToLastPage">
+            Last Page
+            <span class="oi oi-media-skip-forward"></span>
+        </button>
+    </nav>
 }
 
 @code {
     private IList<CustomerModel> Customers;
 
     private HubConnection _hubConnection;
+
+    int PageNumber = 1;
+    int PageSize = 20;
 
     protected override async Task OnInitializedAsync()
     {
@@ -96,5 +149,35 @@ else
     public void Dispose()
     {
         _hubConnection.DisposeAsync();
+    }
+
+    private async Task Next()
+    {
+        PageNumber++;
+        var response = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint + $"?page={PageNumber}&pageSize={PageSize}");
+        Customers = response;
+    }
+
+    private async Task Previous()
+    {
+        PageNumber--;
+        var response = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint + $"?page={PageNumber}&pageSize={PageSize}");
+        Customers = response;
+    }
+
+    private async Task ResetToFirstPage()
+    {
+        PageNumber = 1;
+        var response = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint + $"?page={PageNumber}&pageSize={PageSize}");
+        Customers = response;
+        StateHasChanged();
+    }
+
+    private async Task GoToLastPage()
+    {
+        PageNumber = 5;
+        var response = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint + $"?page={PageNumber}&pageSize={PageSize}");
+        Customers = response;
+        StateHasChanged();
     }
 }
