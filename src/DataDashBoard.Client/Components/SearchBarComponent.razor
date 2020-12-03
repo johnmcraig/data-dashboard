@@ -8,11 +8,17 @@
            @bind-value:event="oninput" />
 
     <div class="input-group-append">
-        <button class="btn btn-success"
+        <button class="btn btn-primary"
                 type="submit"
                 @onclick="HandleSearch">
             <i class="oi oi-magnifying-glass"></i>
             Search
+        </button>
+        <button class="btn btn-danger"
+                type="submit"
+                @onclick="Clear">
+            <i class="oi oi-circle-x"></i>
+            Clear
         </button>
     </div>
 </div>
@@ -26,5 +32,10 @@
     protected async Task HandleSearch()
     {
         await OnSearch.InvokeAsync(SearchTerm.ToLower());
+    }
+
+    protected async Task Clear()
+    {
+        await OnSearch.InvokeAsync(SearchTerm = "");
     }
 }
