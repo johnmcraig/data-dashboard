@@ -12,6 +12,7 @@
 </a>
 
 <SearchBarComponent OnSearch="HandleSearch" />
+
 <br />
 
 <nav class="pagination justify-content-center mb-2">
@@ -71,30 +72,7 @@ else
         </tbody>
     </table>
 
-    <nav class="pagination justify-content-center mb-2">
-        <button class="page-link" @onclick="ResetToFirstPage">
-            <span class="oi oi-media-skip-backward"></span>
-            First Page
-        </button>
-
-        @if (PageNumber > 1)
-        {
-            <button class="page-link" @onclick="Previous">
-                <span class="oi oi-arrow-circle-left"></span>
-                Previous
-            </button>
-        }
-
-        <button class="page-link" @onclick="Next">
-            Next
-            <span class="oi oi-arrow-circle-right"></span>
-        </button>
-
-        <button class="page-link" @onclick="GoToLastPage">
-            Last Page
-            <span class="oi oi-media-skip-forward"></span>
-        </button>
-    </nav>
+    <Pagination CurrentPage="PageNumber" TotalPagesQuantity="PageSize" Radius="2" />
 }
 
 @code {
@@ -104,41 +82,16 @@ else
 
     int PageNumber = 1;
     int PageSize = 20;
+    int TotalRecords;
+    int TotalPages;
+    int StartPage;
+    int EndPage;
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        await StartHubConnection();
         Customers = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint);
-        AddDataListener();
         StateHasChanged();
-    }
-
-    private async Task StartHubConnection()
-    {
-        _hubConnection = new HubConnectionBuilder()
-            .WithUrl(NavigationManager.ToAbsoluteUri("/customerhub"))
-            .Build();
-
-        await _hubConnection.StartAsync();
-        if (_hubConnection.State == HubConnectionState.Connected)
-        {
-            Console.WriteLine("connection started");
-        }
-    }
-
-    private void AddDataListener()
-    {
-        _hubConnection.On<IList<CustomerModel>>("customerhub", (data) =>
-        {
-            foreach (var item in data)
-            {
-                Console.WriteLine($"Name: {item.Name}, Email: {item.Email}");
-            }
-
-            Customers = data;
-            StateHasChanged();
-        });
     }
 
     private async Task HandleSearch(string search)
@@ -146,9 +99,9 @@ else
         Customers = await Http.GetFromJsonAsync<IList<CustomerModel>>($"api/customers?search={search}");
     }
 
-    public void Dispose()
+    private async Task Clear()
     {
-        _hubConnection.DisposeAsync();
+        Customers = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint);
     }
 
     private async Task Next()
