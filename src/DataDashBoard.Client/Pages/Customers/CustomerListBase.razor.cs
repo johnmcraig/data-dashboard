@@ -22,7 +22,7 @@ namespace DataDashboard.Client.Pages.Customers
         protected async Task OnInitializedAsync()
         {
             await StartHubConnection();
-            await CustomerRepo.GetAll(Endpoints.CustomersEndpoint);
+            await LoadCustomers(1, 10);
             AddDataListener();
         }
 
@@ -37,6 +37,11 @@ namespace DataDashboard.Client.Pages.Customers
             {
                 Console.WriteLine("connection started");
             }
+        }
+
+        private async Task LoadCustomers(int page, int pageSize)
+        {
+            await CustomerRepo.GetAll(Endpoints.CustomersEndpoint + $"?page={page}&pageSize={pageSize}");  
         }
 
         private void AddDataListener()
