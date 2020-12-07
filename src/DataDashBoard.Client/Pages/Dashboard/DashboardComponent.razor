@@ -1,5 +1,34 @@
-﻿<h3>DashboardComponent</h3>
+﻿@page "/dashboard"
 
-@code {
-
-}
+<div class="container">
+    <div class="card-deck">
+        <div class="card">
+            <div class="card-header">
+                Servers
+            </div>
+            <div class="card-body">
+                <DataDashboard.Client.Pages.Servers.ServerList />
+            </div>
+        </div>
+    </div>
+    <div class="card-deck mt-4">
+        <div class="card">
+            <div class="card-header">
+                Customers
+            </div>
+            <div class="card-body">
+                <DataDashboard.Client.Pages.Customers.CustomerList />
+            </div>
+        </div>
+    </div>
+    <div class="card-deck mt-4">
+        <div class="card">
+            <div class="card-header">
+                Orders
+            </div>
+            <div class="card-body">
+                <DataDashboard.Client.Pages.Orders.OrderList />
+            </div>
+        </div>
+    </div>
+</div>
