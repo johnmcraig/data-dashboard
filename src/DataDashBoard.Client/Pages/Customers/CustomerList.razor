@@ -33,11 +33,6 @@
         Next
         <span class="oi oi-arrow-circle-right"></span>
     </button>
-
-    <button class="page-link" @onclick="GoToLastPage">
-        Last Page
-        <span class="oi oi-media-skip-forward"></span>
-    </button>
 </nav>
 
 @if (Customers == null)
@@ -80,9 +75,10 @@ else
 
     private HubConnection _hubConnection;
 
+    bool ShowModal = false;
+
     int PageNumber = 1;
     int PageSize = 20;
-    int TotalRecords;
     int TotalPages;
     int StartPage;
     int EndPage;
@@ -90,8 +86,13 @@ else
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        Customers = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint);
+        await LoadCustomers();
         StateHasChanged();
+    }
+
+    private async Task LoadCustomers()
+    {
+        Customers = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint);
     }
 
     private async Task HandleSearch(string search)
@@ -101,7 +102,7 @@ else
 
     private async Task Clear()
     {
-        Customers = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint);
+        await LoadCustomers();
     }
 
     private async Task Next()
@@ -121,14 +122,6 @@ else
     private async Task ResetToFirstPage()
     {
         PageNumber = 1;
-        var response = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint + $"?page={PageNumber}&pageSize={PageSize}");
-        Customers = response;
-        StateHasChanged();
-    }
-
-    private async Task GoToLastPage()
-    {
-        PageNumber = 5;
         var response = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint + $"?page={PageNumber}&pageSize={PageSize}");
         Customers = response;
         StateHasChanged();
