@@ -51,8 +51,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var customer in Customers)
-            {
+            <Microsoft.AspNetCore.Components.Web.Virtualization.Virtualize Items="Customers" Context="customer">
                 <tr>
                     <td scope="row">@customer.Name</td>
                     <td scope="row">@customer.Email</td>
@@ -63,7 +62,7 @@ else
                         </a>
                     </td>
                 </tr>
-            }
+            </Microsoft.AspNetCore.Components.Web.Virtualization.Virtualize>
         </tbody>
     </table>
 
