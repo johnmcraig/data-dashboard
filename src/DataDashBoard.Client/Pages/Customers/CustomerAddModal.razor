@@ -1,0 +1,64 @@
+﻿<div class="modal" tabindex="-1" style="display:block" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="text-info">Add Customer</h3>
+                <button type="button" class="close" @onclick="CloseModal">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-9">
+                        <div class="row py-2">
+                            <EditForm Model="Model" OnValidSubmit="CreateCustomer">
+
+                                <DataAnnotationsValidator />
+
+                                <ValidationSummary />
+
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <InputText @bind-Value="@Model.Name" class="form-control" id="name" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <InputText @bind-Value="@Model.Email" class="form-control" id="email" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="state">State</label>
+                                    <InputText @bind-Value="@Model.State" class="form-control" id="state" />
+                                </div>
+
+                                <button class="btn btn-primary" type="submit">
+                                    <span class="oi oi-pencil"></span>
+                                    Save
+                                </button>
+
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+</div>
+
+@code {
+    [Parameter] public CustomerModel Model { get; set; }
+    [Parameter] public RenderFragment ModalBody { get; set; }
+    [Parameter] public RenderFragment ModalFooter { get; set; }
+    public event Action OnClose;
+
+    void CloseModal()
+    {
+        OnClose?.Invoke();
+    }
+
+    void CreateCustomer()
+    {
+        Model.Id = 0;
+    }
+}
