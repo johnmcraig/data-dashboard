@@ -44,8 +44,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var order in Orders)
-            {
+            <Microsoft.AspNetCore.Components.Web.Virtualization.Virtualize Items="Orders" Context="order">
                 <tr>
                     <td>@order.Placed</td>
                     <td>@order.Completed</td>
@@ -66,8 +65,7 @@ else
                         </a>
                     </td>
                 </tr>
-
-            }
+            </Microsoft.AspNetCore.Components.Web.Virtualization.Virtualize>
         </tbody>
     </table>
 
