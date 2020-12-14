@@ -56,26 +56,25 @@ else
                     <td scope="row">@customer.Name</td>
                     <td scope="row">@customer.Email</td>
                     <td scope="row">@customer.State</td>
-                    <td>
-                        <a href="/customers/details/@customer.Id" class="btn btn-primary">
+                    <td scope="row">
+                        <a class="btn btn-primary" href="/customers/details/@customer.Id" >
                             Details
                         </a>
+
+                        <button type="button" class="btn btn-danger" @onclick="() => CallConfirmationModal(customer.Id)">
+                            Delete
+                        </button>
                     </td>
                 </tr>
             </Microsoft.AspNetCore.Components.Web.Virtualization.Virtualize>
         </tbody>
     </table>
+    <Confirmation BodyMessage="Are you sure you want to delete this Customer?" OnOKClick="DeleteCustomer" @ref="_confirmation" />
 
-    <Pagination CurrentPage="PageNumber" TotalPagesQuantity="PageSize" Radius="2" />
 }
 
 @code {
     private IList<CustomerModel> Customers;
-
-    private HubConnection _hubConnection;
-
-    bool ShowModal = false;
-
     int PageNumber = 1;
     int PageSize = 20;
     int TotalPages;
@@ -85,13 +84,13 @@ else
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        await LoadCustomers();
+        await LoadCustomers(1, 20);
         StateHasChanged();
     }
 
-    private async Task LoadCustomers()
+    private async Task LoadCustomers(int page, int pageSize)
     {
-        Customers = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint);
+        Customers = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint + $"?page={page}&pageSize={pageSize}");
     }
 
     private async Task HandleSearch(string search)
@@ -101,7 +100,7 @@ else
 
     private async Task Clear()
     {
-        await LoadCustomers();
+        await LoadCustomers(1, 20);
     }
 
     private async Task Next()
@@ -125,4 +124,21 @@ else
         Customers = response;
         StateHasChanged();
     }
+
+    private Confirmation _confirmation;
+    private int _customerToDelete;
+
+    private void CallConfirmationModal(int id)
+    {
+        _customerToDelete = id;
+        _confirmation.Show();
+    }
+
+    private async Task DeleteCustomer()
+    {
+        _confirmation.Hide();
+        await CustomerRepo.Delete(Endpoints.CustomersEndpoint, _customerToDelete);
+        await LoadCustomers(1, 20);
+    }
+
 }
