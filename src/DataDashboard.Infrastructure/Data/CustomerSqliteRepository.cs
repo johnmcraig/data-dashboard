@@ -32,9 +32,9 @@ namespace DataDashboard.Infrastructure.Data
 
                 return customer.SingleOrDefault();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception($"There was an error retrieving a record: {ex}");
             }
         }
 
@@ -53,9 +53,9 @@ namespace DataDashboard.Infrastructure.Data
 
                 return result.ToList();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception($"There was an error retrieving a record: {ex}");
             }
         }
 
@@ -72,9 +72,9 @@ namespace DataDashboard.Infrastructure.Data
 
                 return customers.ToList();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception($"There was an error retrieving records: {ex}");
             }
         }
 
@@ -94,9 +94,9 @@ namespace DataDashboard.Infrastructure.Data
 
                 return customers.ToList();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception($"There was an error retrieving records: {ex}");
             }
         }
 
@@ -117,9 +117,9 @@ namespace DataDashboard.Infrastructure.Data
 
                 return customers.ToList();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception($"There was an error retrieving records: {ex}");
             }
         }
 
@@ -141,10 +141,25 @@ namespace DataDashboard.Infrastructure.Data
 
                 return entity;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw new Exception($"There was an error creating the record: {ex}");
+            }
+        }
+
+        public async Task Delete(int id)
+        {
+            const string query = "DELETE FROM Customers WHERE Id = @Id";
+
+            try
+            {
+                await _dataAccess.SaveData(query, new { @Id = id }, ConnectionString);
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception($"There was an error deleting the record: {ex}");
             }
         }
     }

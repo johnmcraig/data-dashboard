@@ -33,10 +33,7 @@ namespace DataDashboard.Infrastructure.Data
 
                 return customer.FirstOrDefault();
             }
-            catch (Exception)
-            {
-                throw;
-            }
+            catch (Exception ex) { throw new Exception($"There was an error retrieving a record: {ex}"); }
         }
 
         public async Task<IList<Customer>> FindBySearch(string search)
@@ -54,10 +51,7 @@ namespace DataDashboard.Infrastructure.Data
 
                 return result.ToList();
             }
-            catch (Exception)
-            {
-                throw;
-            }
+            catch (Exception ex) { throw new Exception($"There was an error retrieving a record: {ex}"); }
         }
 
         public async Task<IList<Customer>> ListAllAsync()
@@ -73,10 +67,7 @@ namespace DataDashboard.Infrastructure.Data
 
                 return customers.ToList();
             }
-            catch (Exception)
-            {
-                throw;
-            }
+            catch (Exception ex) { throw new Exception($"There was an error retrieving a record: {ex}"); }
         }
 
         public async Task<IList<Customer>> ListAllWithPaging(int page, int pageSize)
@@ -97,10 +88,7 @@ namespace DataDashboard.Infrastructure.Data
 
                 return customers.ToList();
             }
-            catch (Exception)
-            {
-                throw;
-            }
+            catch (Exception ex) { throw new Exception($"There was an error retrieving a record: {ex}"); }
         }
 
         public async Task<IList<Customer>> ListAllWithSearchingAndPaging(string search, int page, int pageSize)
@@ -122,10 +110,7 @@ namespace DataDashboard.Infrastructure.Data
 
                 return customers.ToList();
             }
-            catch (Exception)
-            {
-                throw;
-            }
+            catch (Exception ex) { throw new Exception($"There was an error retrieving a record: {ex}"); }
         }
 
         public async Task<Customer> Create(Customer entity)
@@ -146,10 +131,23 @@ namespace DataDashboard.Infrastructure.Data
 
                 return entity;
             }
-            catch (Exception)
-            {
+            catch (Exception ex) 
+            { 
+                throw new Exception($"There was an error creating a record: {ex}"); 
+            }
+        }
 
-                throw;
+        public async Task Delete(int id)
+        {
+            const string query = "DELETE FROM \"public\".\"Customers\" WHERE Id = @Id";
+
+            try
+            {
+                await _dataAccess.SaveData(query, new { @Id = id }, ConnectionString);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"There was an error deleting the record: {ex}");
             }
         }
     }
