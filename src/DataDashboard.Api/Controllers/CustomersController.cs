@@ -29,7 +29,7 @@ namespace DataDashboard.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAll(string search, int page, int pageSize)
+        public async Task<IActionResult> GetAll(string search, int page = 1, int pageSize = 10)
         {
             _logger.LogInformation("Attempting to get all records");
 
@@ -101,13 +101,33 @@ namespace DataDashboard.Api.Controllers
 
         }
 
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateCustomer(int id, [FromBody] Customer customerToUpdate)
+        {
+            var customer = await _unitOfWork.Customers.GetByIdAsync(id);
+
+            if (customer == null)
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            await _unitOfWork.Customers.Update(customerToUpdate);
+
+            return NoContent();
+        }
+
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteCustomer(int id)
         {
-            var customer = _unitOfWork.Customers.GetByIdAsync(id);
+            var customer = await _unitOfWork.Customers.GetByIdAsync(id);
             if (customer == null)
                 return NotFound();
 
