@@ -1,5 +1,6 @@
 ﻿using DataDashboard.Client.Contracts;
 using DataDashboard.Client.Models;
+using DataDashboard.Client.Shared;
 using DataDashboard.Client.Static;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -10,33 +11,32 @@ using System.Threading.Tasks;
 
 namespace DataDashboard.Client.Pages.Customers 
 {
-    public partial class CustomerListBase : IDisposable
+    public partial class CustomerListBase
     {
-        private HubConnection _hubConnection;
+        [Parameter]
+        public IList<CustomerModel> Customers { get; set; }
 
-        public IList<CustomerModel> Customers = new List<CustomerModel>();
+        [Parameter]
+        public EventCallback<int> OnDelete { get; set; }
 
         [Inject]
         public ICustomerRepository CustomerRepo { get; set; }
 
-        protected async Task OnInitializedAsync()
-        {
-            await StartHubConnection();
-            await LoadCustomers(1, 10);
-            AddDataListener();
-        }
+        private Confirmation _confirmation;
+        private int _customerToDelete;
+        
 
-        private async Task StartHubConnection()
-        {
-            _hubConnection = new HubConnectionBuilder()
-                .WithUrl("/customerhub")
-                .Build();
+        //protected override async Task OnInitializedAsync()
+        //{
+        //    await base.OnInitializedAsync();
+        //    await LoadCustomers(1, 10);
+        //    StateHasChanged();
+        //}
 
-            await _hubConnection.StartAsync();
-            if (_hubConnection.State == HubConnectionState.Connected)
-            {
-                Console.WriteLine("connection started");
-            }
+        private void CallConfirmationModal(int id)
+        {
+            _customerToDelete = id;
+            _confirmation.Show();
         }
 
         private async Task LoadCustomers(int page, int pageSize)
@@ -44,22 +44,13 @@ namespace DataDashboard.Client.Pages.Customers
             await CustomerRepo.GetAll(Endpoints.CustomersEndpoint + $"?page={page}&pageSize={pageSize}");  
         }
 
-        private void AddDataListener()
+        private async Task DeleteCustomer()
         {
-            _hubConnection.On<IList<CustomerModel>>("", (data) =>
-            {
-                foreach (var item in data)
-                {
-                    Console.WriteLine($"Name: {item.Name}, Email: {item.Email}");
-                }
-
-                Customers = data;
-            });
+            _confirmation.Hide();
+            await OnDelete.InvokeAsync(_customerToDelete);
+            await CustomerRepo.Delete(Endpoints.CustomersEndpoint, _customerToDelete);
+            await LoadCustomers(1, 10);
         }
 
-        public void Dispose()
-        {
-            _hubConnection.DisposeAsync();
-        }
     }
 }
