@@ -74,17 +74,17 @@ namespace DataDashboard.Client.Services
         //    return false;
         //}
 
-        //public async Task<bool> Delete(string url, int id)
-        //{
-        //    if (id < 1) 
-        //        return false;
-
-        //    var response = await _client.DeleteAsync(url + id);
-
-        //    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
-        //        return true;
-
-        //    return false;
-        //}
+        public async Task Delete(string url, int id)
+        {
+            try
+            {
+                await _client.DeleteAsync(url + id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new Exception($"There was an error deleting a record: {ex}");
+            }
+        }
     }
 }
