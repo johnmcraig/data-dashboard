@@ -61,18 +61,23 @@ namespace DataDashboard.Client.Services
             return null;
         }
 
-        //public async Task<bool> Update(string url, T entity, int id)
-        //{
-        //    if (entity == null) 
-        //        return false;
+        public async Task<T> Update(string url, T entity, int id)
+        {
+            try
+            {
+                var response = await _client.PutAsJsonAsync(url + id, entity);
 
-        //    var response = await _client.PutAsJsonAsync(url + id, entity);
+                if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    return entity;
 
-        //    if (response.StatusCode == System.Net.HttpStatusCode.NoContent) 
-        //        return true;
-
-        //    return false;
-        //}
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new Exception($"There was an error updating a record: {ex}");
+            }     
+        }
 
         public async Task Delete(string url, int id)
         {
