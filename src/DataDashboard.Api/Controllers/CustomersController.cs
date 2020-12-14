@@ -18,7 +18,7 @@ namespace DataDashboard.Api.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IHubContext<CustomerHub> _customerHub;
 
-        public CustomersController(ILogger<CustomersController> logger, 
+        public CustomersController(ILogger<CustomersController> logger,
             IUnitOfWork unitOfWork, IHubContext<CustomerHub> customerHub)
         {
             _logger = logger;
@@ -29,7 +29,7 @@ namespace DataDashboard.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAll(string search, int page = 1, int pageSize = 20)
+        public async Task<IActionResult> GetAll(string search, int page, int pageSize)
         {
             _logger.LogInformation("Attempting to get all records");
 
@@ -53,7 +53,7 @@ namespace DataDashboard.Api.Controllers
                 _logger.LogError($"Could not find any records! Please see the following: {ex.Message}");
                 return BadRequest();
             }
-            
+
         }
 
         [HttpGet("{id}")]
@@ -66,7 +66,7 @@ namespace DataDashboard.Api.Controllers
             try
             {
                 var customer = await _unitOfWork.Customers.GetByIdAsync(id);
-                
+
                 if (customer == null) return NotFound();
 
                 return Ok(customer);
@@ -75,7 +75,7 @@ namespace DataDashboard.Api.Controllers
             {
                 _logger.LogError($"Could not find the record with Id: {id}. Please see the following: {ex.Message}");
                 return BadRequest();
-            } 
+            }
         }
 
         [HttpPost]
@@ -98,7 +98,21 @@ namespace DataDashboard.Api.Controllers
                 Message = "Request completed",
                 customer
             });
-               
+
+        }
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeleteCustomer(int id)
+        {
+            var customer = _unitOfWork.Customers.GetByIdAsync(id);
+            if (customer == null)
+                return NotFound();
+
+            await _unitOfWork.Customers.Delete(id);
+
+            return NoContent();
         }
     }
 }
