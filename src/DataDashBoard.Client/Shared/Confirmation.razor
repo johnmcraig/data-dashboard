@@ -1,0 +1,33 @@
+﻿<div class="modal" tabindex="-1" style="display:@_modalDisplay" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="text-info">Add Customer</h5>
+                <button type="button" class="close" @onclick="Hide" arial-label="Close">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>@BodyMessage</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success"
+                        data-dismiss="modal"
+                        @onclick="() => OnOKClick.InvokeAsync()">
+                    Ok
+                </button>
+
+                <button type="button" class="btn btn-danger"
+                        data-dismiss="modal"
+                        @onclick="Hide">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (_showBackDrop)
+{
+    <div class="modal-backdrop fade show"></div>
+}
