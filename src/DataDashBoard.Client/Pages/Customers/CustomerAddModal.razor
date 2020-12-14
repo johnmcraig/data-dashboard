@@ -2,8 +2,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="text-info">Add Customer</h3>
-                <button type="button" class="close" @onclick="CloseModal">
+                <h5 class="text-info">Add Customer</h5>
+                <button type="button" class="close" @onclick="Hide" arial-label="Close">
                     <span aria-hidden="true">X</span>
                 </button>
             </div>
@@ -40,19 +40,30 @@
                     </div>
                 </div>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" 
+                        data-dismiss="modal"
+                        @onclick="Hide">
+                    Cancel
+                </button>
+            </div>
         </div>
-    </div>
-    
-    
+    </div>   
 </div>
+
+@if(_showBackDrop)
+{
+    <div class="modal-backdrop fade show"></div>
+}
 
 @code {
     [Parameter] public CustomerModel Model { get; set; }
     [Parameter] public RenderFragment ModalBody { get; set; }
     [Parameter] public RenderFragment ModalFooter { get; set; }
     public event Action OnClose;
+    private bool _showBackDrop = false;
 
-    void CloseModal()
+    void Hide()
     {
         OnClose?.Invoke();
     }
