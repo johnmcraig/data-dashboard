@@ -20,7 +20,7 @@ namespace DataDashboard.Infrastructure.Data
 
         public async Task<Customer> GetByIdAsync(int id)
         {
-            const string query = "SELECT * FROM Customers" +
+            const string query = "SELECT Id, Name, Email, State FROM Customers" +
                                  " WHERE Id = @Id";
             try
             {
@@ -40,7 +40,7 @@ namespace DataDashboard.Infrastructure.Data
 
         public async Task<IList<Customer>> FindBySearch(string search)
         {
-            string query = "SELECT * FROM Customers " +
+            string query = "SELECT Id, Name, Email, State FROM Customers " +
                            "WHERE Name LIKE @Search";
 
             try
@@ -61,7 +61,7 @@ namespace DataDashboard.Infrastructure.Data
 
         public async Task<IList<Customer>> ListAllAsync()
         {
-            const string query = "SELECT * FROM Customers";
+            const string query = "SELECT Id, Name, Email, State FROM Customers";
 
             try
             {
@@ -80,7 +80,7 @@ namespace DataDashboard.Infrastructure.Data
 
         public async Task<IList<Customer>> ListAllWithPaging(int page, int pageSize)
         {
-            const string query = "SELECT * FROM Customers " +
+            const string query = "SELECT Id, Name, Email, State FROM Customers " +
                                  "LIMIT @PageSize OFFSET @Offset ";
 
             try
@@ -102,7 +102,7 @@ namespace DataDashboard.Infrastructure.Data
 
         public async Task<IList<Customer>> ListAllWithSearchingAndPaging(string search, int page, int pageSize)
         {
-            const string query = "SELECT * FROM Customers WHERE Name LIKE @Search " +
+            const string query = "SELECT Id, Name, Email, State FROM Customers WHERE Name LIKE @Search " +
                                  "ORDER BY Id LIMIT @PageSize OFFSET @Offset";
 
             try
@@ -143,7 +143,6 @@ namespace DataDashboard.Infrastructure.Data
             }
             catch (Exception ex)
             {
-
                 throw new Exception($"There was an error creating the record: {ex}");
             }
         }
@@ -158,8 +157,21 @@ namespace DataDashboard.Infrastructure.Data
             }
             catch (Exception ex)
             {
-
                 throw new Exception($"There was an error deleting the record: {ex}");
+            }
+        }
+
+        public async Task Update(Customer customer)
+        {
+            const string query = "UPDATE Customers SET Name = @Name, Email = @Email, State = @State WHERE Id = @Id";
+
+            try
+            {
+                await _dataAccess.SaveData(query, customer, ConnectionString);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"There was an error updating the record: {ex}");
             }
         }
     }

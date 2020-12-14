@@ -139,7 +139,7 @@ namespace DataDashboard.Infrastructure.Data
 
         public async Task Delete(int id)
         {
-            const string query = "DELETE FROM \"public\".\"Customers\" WHERE Id = @Id";
+            const string query = "DELETE FROM \"public\".\"Customers\" WHERE \"Id\" = @Id";
 
             try
             {
@@ -148,6 +148,20 @@ namespace DataDashboard.Infrastructure.Data
             catch (Exception ex)
             {
                 throw new Exception($"There was an error deleting the record: {ex}");
+            }
+        }
+
+        public async Task Update(Customer customer)
+        {
+            const string query = "UPDATE \"public\".\"Customers\" SET \"Name\" = @Name, \"Email\" = @Email, \"State\" = @State WHERE \"Id\" = @Id";
+
+            try
+            {
+                await _dataAccess.SaveData(query, customer, ConnectionString);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"There was an error updating the record: {ex}");
             }
         }
     }
