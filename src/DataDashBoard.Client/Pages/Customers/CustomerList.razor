@@ -76,7 +76,7 @@ else
 @code {
     private IList<CustomerModel> Customers;
     int PageNumber = 1;
-    int PageSize = 20;
+    int PageSize = 10;
     int TotalPages;
     int StartPage;
     int EndPage;
@@ -84,14 +84,14 @@ else
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        await LoadCustomers(1, 20);
+        Customers = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint);
         StateHasChanged();
     }
 
-    private async Task LoadCustomers(int page, int pageSize)
-    {
-        Customers = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint + $"?page={page}&pageSize={pageSize}");
-    }
+    //private async Task LoadCustomers(int page, int pageSize)
+    //{
+    //    Customers = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint + $"?page={page}&pageSize={pageSize}");
+    //}
 
     private async Task HandleSearch(string search)
     {
@@ -100,7 +100,7 @@ else
 
     private async Task Clear()
     {
-        await LoadCustomers(1, 20);
+        Customers = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint);
     }
 
     private async Task Next()
@@ -138,7 +138,7 @@ else
     {
         _confirmation.Hide();
         await CustomerRepo.Delete(Endpoints.CustomersEndpoint, _customerToDelete);
-        await LoadCustomers(1, 20);
+        await CustomerRepo.GetAll(Endpoints.CustomersEndpoint);
     }
 
 }
