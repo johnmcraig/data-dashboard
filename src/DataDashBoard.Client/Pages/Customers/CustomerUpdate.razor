@@ -1,0 +1,77 @@
+﻿@page "/customers/update/{Id:int}"
+
+@inject ICustomerRepository CustomerRepo
+@inject NavigationManager NavManager
+
+<h3>Update Customer</h3>
+
+<EditForm Model="Model" OnValidSubmit="UpdateCustomer">
+
+    <DataAnnotationsValidator />
+
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label for="name">Name</label>
+        <InputText @bind-Value="@Model.Name" class="form-control" id="name" />
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <InputText @bind-Value="@Model.Email" class="form-control" id="email" />
+    </div>
+    <div class="form-group">
+        <label for="state">State</label>
+        <InputText @bind-Value="@Model.State" class="form-control" id="state" />
+    </div>
+
+    <button class="btn btn-success" type="submit">
+        <span class="oi oi-check"></span>
+        Submit Changes
+    </button>
+
+    <button @onclick="BackToList" class="btn btn-danger">
+        <span class="oi oi-circle-x"></span>
+        Cancel
+    </button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    public CustomerModel Model = new CustomerModel();
+
+    private bool _isSuccessful = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Model = await CustomerRepo.GetSingle(Endpoints.CustomersEndpoint, Id);
+    }
+
+    private async Task UpdateCustomer()
+    {
+        try
+        {
+            await CustomerRepo.Update(Endpoints.CustomersEndpoint, Model, Model.Id);
+            _isSuccessful = true;
+            if (_isSuccessful)
+            {
+                BackToList();
+            }
+            else
+            {
+                _isSuccessful = false;
+                Console.WriteLine("An error occurred while updating the record!");
+            }
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("An error occurred while updating the record!");
+        }
+    }
+
+    public void BackToList()
+    {
+        NavManager.NavigateTo("/customers/");
+    }
+}
