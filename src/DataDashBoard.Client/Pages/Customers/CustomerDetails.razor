@@ -26,14 +26,20 @@ else
                 <td>@Model.State</td>
             </tr>
         </table>
-
-        </div>
+    </div>
 }
 
 <button @onclick="BackToList" class="btn btn-secondary">
     <span class="oi oi-media-skip-backward"></span>
     Back To List
 </button>
+
+<button @onclick="GoToUpdate" class="btn btn-success">
+    <span class="oi oi-pencil"></span>
+    Update
+</button>
+
+
 
 @code {
     [Parameter]
@@ -49,5 +55,10 @@ else
     private void BackToList()
     {
         NavManager.NavigateTo("/customers");
+    }
+
+    private void GoToUpdate()
+    {
+        NavManager.NavigateTo($"/customers/update/{Model.Id}");
     }
 }
