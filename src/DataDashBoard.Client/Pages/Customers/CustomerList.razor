@@ -60,7 +60,9 @@ else
                         <a class="btn btn-primary" href="/customers/details/@customer.Id" >
                             Details
                         </a>
-
+                        <a class="btn btn-success" href="/customers/update/@customer.Id">
+                            Update
+                        </a>
                         <button type="button" class="btn btn-danger" @onclick="() => CallConfirmationModal(customer.Id)">
                             Delete
                         </button>
