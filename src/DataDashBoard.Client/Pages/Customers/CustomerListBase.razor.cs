@@ -24,14 +24,6 @@ namespace DataDashboard.Client.Pages.Customers
 
         private Confirmation _confirmation;
         private int _customerToDelete;
-        
-
-        //protected override async Task OnInitializedAsync()
-        //{
-        //    await base.OnInitializedAsync();
-        //    await LoadCustomers(1, 10);
-        //    StateHasChanged();
-        //}
 
         private void CallConfirmationModal(int id)
         {
