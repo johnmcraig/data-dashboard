@@ -17,21 +17,18 @@
 
 <nav class="pagination justify-content-center mb-2">
     <button class="page-link" @onclick="ResetToFirstPage">
-        <span class="oi oi-media-skip-backward"></span>
         First Page
     </button>
 
-    @if (PageNumber > 1)
+    @if (pageNumber > 1)
     {
         <button class="page-link" @onclick="Previous">
-            <span class="oi oi-arrow-circle-left"></span>
             Previous
         </button>
     }
 
     <button class="page-link" @onclick="Next">
         Next
-        <span class="oi oi-arrow-circle-right"></span>
     </button>
 </nav>
 
@@ -76,24 +73,21 @@ else
 }
 
 @code {
-    private IList<CustomerModel> Customers;
-    int PageNumber = 1;
-    int PageSize = 10;
-    int TotalPages;
-    int StartPage;
-    int EndPage;
+    [Parameter] public IList<CustomerModel> Customers { get; set; }
+    private int pageNumber = 1;
+    private int pageSize = 10;
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        Customers = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint);
+        await LoadCustomers(pageNumber, pageSize);
         StateHasChanged();
     }
 
-    //private async Task LoadCustomers(int page, int pageSize)
-    //{
-    //    Customers = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint + $"?page={page}&pageSize={pageSize}");
-    //}
+    private async Task LoadCustomers(int pageNumber, int pageSize)
+    {
+        Customers = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint + $"?page={pageNumber}&pageSize={pageSize}");
+    }
 
     private async Task HandleSearch(string search)
     {
@@ -107,22 +101,22 @@ else
 
     private async Task Next()
     {
-        PageNumber++;
-        var response = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint + $"?page={PageNumber}&pageSize={PageSize}");
+        pageNumber++;
+        var response = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint + $"?page={pageNumber}&pageSize={pageSize}");
         Customers = response;
     }
 
     private async Task Previous()
     {
-        PageNumber--;
-        var response = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint + $"?page={PageNumber}&pageSize={PageSize}");
+        pageNumber--;
+        var response = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint + $"?page={pageNumber}&pageSize={pageSize}");
         Customers = response;
     }
 
     private async Task ResetToFirstPage()
     {
-        PageNumber = 1;
-        var response = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint + $"?page={PageNumber}&pageSize={PageSize}");
+        pageNumber = 1;
+        var response = await CustomerRepo.GetAll(Endpoints.CustomersEndpoint + $"?page={pageNumber}&pageSize={pageSize}");
         Customers = response;
         StateHasChanged();
     }
