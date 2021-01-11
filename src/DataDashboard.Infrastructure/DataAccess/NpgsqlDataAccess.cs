@@ -24,7 +24,7 @@ namespace DataDashboard.Infrastructure.DataAccess
             {
                 connection.Open();
 
-                var rows = await connection.QueryAsync<T>(sql, parameters, commandType: CommandType.Text);
+                var rows = await connection.QueryAsync<T>(sql, parameters, commandType: CommandType.StoredProcedure);
 
                 return rows.ToList();
             }
@@ -36,7 +36,7 @@ namespace DataDashboard.Infrastructure.DataAccess
             {
                 connection.Open();
 
-                await connection.ExecuteAsync(sql, parameters, commandType: CommandType.Text);
+                await connection.ExecuteAsync(sql, parameters, commandType: CommandType.StoredProcedure);
             }
         }
     }
