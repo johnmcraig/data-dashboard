@@ -98,7 +98,7 @@ namespace DataDashboard.Infrastructure.SeedData
             {
                 var randCustomerId = rand.Next(1, _context.Customers.Count()); //(1, ..) set min value to 1 as no customer id is set to 0 in the seed data
                 var placed = Helpers.GetRandomOrderPlaced();
-                var completed = Helpers.GetRandomOrderCompleted(placed); //completed only happens when an order was already placed
+                var completed = Helpers.GetRandomOrderCompleted(placed); //completion only happens when an order was already placed
                 var customers = _context.Customers.ToList();
 
                 orders.Add(new Order
