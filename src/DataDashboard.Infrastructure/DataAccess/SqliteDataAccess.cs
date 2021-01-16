@@ -20,25 +20,35 @@ namespace DataDashboard.Infrastructure.DataAccess
             _config = config;
         }
 
-        public async Task<List<T>> LoadData<T, U>(string sql, U parameters, string connectionStringName)
+        public async Task<List<T>> LoadData<T, U>(string sql, U parameters, string connectionStringName, bool isStoredProcedure = false)
         {
+            CommandType commandType = CommandType.Text;
+
+            if(isStoredProcedure == true)
+            {
+                commandType = CommandType.StoredProcedure;
+            }
+            
             using (IDbConnection connection = new SqliteConnection(_config.GetConnectionString(connectionStringName)))
             {
-                connection.Open();
-
-                var rows = await connection.QueryAsync<T>(sql, parameters, commandType: CommandType.Text);
+                var rows = await connection.QueryAsync<T>(sql, parameters, commandType: commandType);
 
                 return rows.ToList();
             }
         }
 
-        public async Task SaveData<T>(string sql, T parameters, string connectionStringName)
+        public async Task SaveData<T>(string sql, T parameters, string connectionStringName, bool isStoredProcedure = false)
         {
+            CommandType commandType = CommandType.Text;
+
+            if (isStoredProcedure == true)
+            {
+                commandType = CommandType.StoredProcedure;
+            }
+
             using (IDbConnection connection = new SqliteConnection(_config.GetConnectionString(connectionStringName)))
             {
-                connection.Open();
-
-                await connection.ExecuteAsync(sql, parameters, commandType: CommandType.Text);
+                await connection.ExecuteAsync(sql, parameters, commandType: commandType);
             }
         }
     }
