@@ -81,7 +81,8 @@ namespace DataDashboard.Infrastructure.Data
         public async Task<IList<Customer>> ListAllWithPaging(int page, int pageSize)
         {
             const string query = "SELECT Id, Name, Email, State FROM Customers " +
-                                 "LIMIT @PageSize OFFSET @Offset ";
+                                 "LIMIT @PageSize OFFSET @Offset " +
+                                 "SELECT COUNT(*) FROM Customers";
 
             try
             {
@@ -91,7 +92,7 @@ namespace DataDashboard.Infrastructure.Data
                         @Offset = (page - 1) * pageSize,
                         @PageSize = pageSize
                     }, ConnectionString);
-
+                
                 return customers.ToList();
             }
             catch (Exception ex)
