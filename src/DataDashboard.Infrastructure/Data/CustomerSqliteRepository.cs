@@ -81,8 +81,7 @@ namespace DataDashboard.Infrastructure.Data
         public async Task<IList<Customer>> ListAllWithPaging(int page, int pageSize)
         {
             const string query = "SELECT Id, Name, Email, State FROM Customers " +
-                                 "LIMIT @PageSize OFFSET @Offset " +
-                                 "SELECT COUNT(*) FROM Customers";
+                                 "LIMIT @PageSize OFFSET @Offset";
 
             try
             {
