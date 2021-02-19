@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataDashboard.Infrastructur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataDashboard.Client", "DataDashboard.Client\DataDashboard.Client.csproj", "{3F8FECF3-43C9-4B10-A634-2B8FE1570C6E}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DataDashboard.Database", "DataDashboard.Database\DataDashboard.Database.sqlproj", "{6910B284-E124-4901-A945-0535930E8DA8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,24 @@ Global
 		{3F8FECF3-43C9-4B10-A634-2B8FE1570C6E}.Release|x64.Build.0 = Release|Any CPU
 		{3F8FECF3-43C9-4B10-A634-2B8FE1570C6E}.Release|x86.ActiveCfg = Release|Any CPU
 		{3F8FECF3-43C9-4B10-A634-2B8FE1570C6E}.Release|x86.Build.0 = Release|Any CPU
+		{6910B284-E124-4901-A945-0535930E8DA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6910B284-E124-4901-A945-0535930E8DA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6910B284-E124-4901-A945-0535930E8DA8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{6910B284-E124-4901-A945-0535930E8DA8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6910B284-E124-4901-A945-0535930E8DA8}.Debug|x64.Build.0 = Debug|Any CPU
+		{6910B284-E124-4901-A945-0535930E8DA8}.Debug|x64.Deploy.0 = Debug|Any CPU
+		{6910B284-E124-4901-A945-0535930E8DA8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6910B284-E124-4901-A945-0535930E8DA8}.Debug|x86.Build.0 = Debug|Any CPU
+		{6910B284-E124-4901-A945-0535930E8DA8}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{6910B284-E124-4901-A945-0535930E8DA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6910B284-E124-4901-A945-0535930E8DA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6910B284-E124-4901-A945-0535930E8DA8}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{6910B284-E124-4901-A945-0535930E8DA8}.Release|x64.ActiveCfg = Release|Any CPU
+		{6910B284-E124-4901-A945-0535930E8DA8}.Release|x64.Build.0 = Release|Any CPU
+		{6910B284-E124-4901-A945-0535930E8DA8}.Release|x64.Deploy.0 = Release|Any CPU
+		{6910B284-E124-4901-A945-0535930E8DA8}.Release|x86.ActiveCfg = Release|Any CPU
+		{6910B284-E124-4901-A945-0535930E8DA8}.Release|x86.Build.0 = Release|Any CPU
+		{6910B284-E124-4901-A945-0535930E8DA8}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
