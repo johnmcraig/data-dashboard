@@ -66,7 +66,8 @@ namespace DataDashboard.Infrastructure.Data
                                  "LEFT JOIN Customers AS cus " +
                                  "ON o.CustomerId = cus.Id " +
                                  "ORDER BY o.Placed " + 
-                                 "LIMIT @PageSize OFFSET @Offset";
+                                 "LIMIT @PageSize OFFSET @Offset; " +
+                                 "SELECT COUNT(*) FROM Orders";
             try
             {
                 using (var connection = new SqliteConnection(_config
