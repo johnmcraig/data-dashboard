@@ -1,4 +1,5 @@
 ﻿@page "/customers"
+@page "/customers/{pageNumber:int}"
 
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
@@ -15,29 +16,35 @@
 
 <br />
 
-<nav class="pagination justify-content-center mb-2">
-    <button class="page-link" @onclick="ResetToFirstPage">
-        First Page
-    </button>
-
-    @if (pageNumber > 1)
-    {
-        <button class="page-link" @onclick="Previous">
-            Previous
-        </button>
-    }
-
-    <button class="page-link" @onclick="Next">
-        Next
-    </button>
-</nav>
-
 @if (Customers == null)
 {
     <p>Loading...</p>
 }
 else
 {
+    <nav>
+        <ul class="pagination justify-content-center">
+            <li>
+                <button class="page-link" @onclick="Previous">
+                    Previous
+                </button>
+            </li>
+
+            @for (int p = 1; p <= Customers.Count(); p++)
+            {
+                <li>
+                    <a class="page-link" href="customers/@p">@p</a>
+                </li>
+            }
+
+            <li>
+                <button class="page-link" @onclick="Next">
+                    Next
+                </button>
+            </li>
+        </ul>
+    </nav>
+
     <table class="table table-striped table-responsive-sm">
         <thead class="thead-dark">
             <tr>
@@ -54,7 +61,7 @@ else
                     <td scope="row">@customer.Email</td>
                     <td scope="row">@customer.State</td>
                     <td scope="row">
-                        <a class="btn btn-primary" href="/customers/details/@customer.Id" >
+                        <a class="btn btn-primary" href="/customers/details/@customer.Id">
                             Details
                         </a>
                         <a class="btn btn-success" href="/customers/update/@customer.Id">
@@ -74,10 +81,10 @@ else
 
 @code {
     [Parameter] public IList<CustomerModel> Customers { get; set; }
-    private int pageNumber = 1;
+    [Parameter] public int pageNumber { get; set; } = 1;
     private int pageSize = 10;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         await base.OnInitializedAsync();
         await LoadCustomers(pageNumber, pageSize);
