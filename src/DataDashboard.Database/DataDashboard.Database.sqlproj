@@ -70,6 +70,7 @@
     <Build Include="dbo\Stored Procedures\spCustomers_Insert.sql" />
     <Build Include="dbo\Stored Procedures\spCustomers_Update.sql" />
     <Build Include="dbo\Stored Procedures\spCustomers_Delete.sql" />
+    <Build Include="dbo\Stored Procedures\spCustomer_GetAllWithPaging.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DataDashboard.Database.refactorlog" />

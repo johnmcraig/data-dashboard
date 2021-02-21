@@ -8,7 +8,7 @@ BEGIN
 	SET NOCOUNT ON;
 
 	UPDATE [dbo].[Customers] 
-	SET [Name] = @Name, Email = @Email, [State] = @State 
+	SET [Name] = @Name, [Email] = @Email, [State] = @State 
 	WHERE Id = @Id;
 
 END
