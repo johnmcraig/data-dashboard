@@ -29,7 +29,7 @@ namespace DataDashboard.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAll(string search, int page = 1, int pageSize = 10)
+        public async Task<IActionResult> GetAll(string search, int page, int pageSize)
         {
             _logger.LogInformation("Attempting to get all records");
 
