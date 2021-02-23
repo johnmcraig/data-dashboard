@@ -14,6 +14,11 @@ namespace DataDashboard.Infrastructure
             services.AddScoped<ISqlDataAccess, SqliteDataAccess>();
             services.AddDbContext<ApiContext>();
 
+            services.AddSingleton(new SqliteConnectionStringData
+            {
+                ConnectionString = "sqlite"
+            });
+
             services.AddTransient<DataSeed>();
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));

@@ -4,8 +4,8 @@ using System.Text;
 
 namespace DataDashboard.Infrastructure.DataAccess
 {
-    public class ConnectionStringData
+    public class SqliteConnectionStringData
     {
-        public string ConnectionString { get; set; } = "default";
+        public string ConnectionString { get; set; } = "sqlite";
     }
 }

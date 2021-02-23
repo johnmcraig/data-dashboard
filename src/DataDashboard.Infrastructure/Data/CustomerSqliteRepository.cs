@@ -1,6 +1,7 @@
 ﻿using DataDashboard.Core.DataSqlAccess;
 using DataDashboard.Core.Entities;
 using DataDashboard.Core.Interfaces;
+using DataDashboard.Infrastructure.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,12 @@ namespace DataDashboard.Infrastructure.Data
     public class CustomerSqliteRepository : ICustomerRepository
     {
         private readonly ISqlDataAccess _dataAccess;
-        private const string ConnectionString = "sqlite";
+        private readonly SqliteConnectionStringData _connectionString;
 
-        public CustomerSqliteRepository(ISqlDataAccess dataAccess)
+        public CustomerSqliteRepository(ISqlDataAccess dataAccess, SqliteConnectionStringData connectionString)
         {
             _dataAccess = dataAccess;
+            _connectionString = connectionString;
         }
 
         public async Task<Customer> GetByIdAsync(int id)
@@ -28,7 +30,7 @@ namespace DataDashboard.Infrastructure.Data
                     (query, new
                     {
                         @Id = id
-                    }, ConnectionString);
+                    }, _connectionString.ConnectionString, false);
 
                 return customer.SingleOrDefault();
             }
@@ -49,7 +51,7 @@ namespace DataDashboard.Infrastructure.Data
                     (query, new
                     {
                         @Search = "%" + search + "%"
-                    }, ConnectionString);
+                    }, _connectionString.ConnectionString, false);
 
                 return result.ToList();
             }
@@ -68,7 +70,7 @@ namespace DataDashboard.Infrastructure.Data
                 var customers = await _dataAccess.LoadData<Customer, dynamic>
                     (query, new
                     {
-                    }, ConnectionString);
+                    }, _connectionString.ConnectionString, false);
 
                 return customers.ToList();
             }
@@ -91,7 +93,7 @@ namespace DataDashboard.Infrastructure.Data
                     {
                         @Offset = (page - 1) * pageSize,
                         @PageSize = pageSize
-                    }, ConnectionString);
+                    }, _connectionString.ConnectionString, false);
                 
                 return customers.ToList();
             }
@@ -114,7 +116,7 @@ namespace DataDashboard.Infrastructure.Data
                         @Search = "%" + search + "%",
                         @Offset = (page - 1) * pageSize,
                         @PageSize = pageSize
-                    }, ConnectionString);
+                    }, _connectionString.ConnectionString, false);
 
                 return customers.ToList();
             }
@@ -138,7 +140,7 @@ namespace DataDashboard.Infrastructure.Data
                     entity.State
                 };
 
-                await _dataAccess.SaveData(query, customer, ConnectionString);
+                await _dataAccess.SaveData(query, customer, _connectionString.ConnectionString, false);
 
                 return entity;
             }
@@ -154,7 +156,7 @@ namespace DataDashboard.Infrastructure.Data
 
             try
             {
-                await _dataAccess.SaveData(query, new { @Id = id }, ConnectionString);
+                await _dataAccess.SaveData(query, new { @Id = id }, _connectionString.ConnectionString, false);
             }
             catch (Exception ex)
             {
@@ -168,7 +170,7 @@ namespace DataDashboard.Infrastructure.Data
 
             try
             {
-                await _dataAccess.SaveData(query, customer, ConnectionString);
+                await _dataAccess.SaveData(query, customer, _connectionString.ConnectionString, false);
             }
             catch (Exception ex)
             {

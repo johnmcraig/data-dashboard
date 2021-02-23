@@ -23,10 +23,13 @@ namespace DataDashboard.Infrastructure.Data
         {
             //const string query = "SELECT * FROM \"public\".\"Customers\" " +
             //                     " WHERE \"Id\" = @Id";
+
+            string sql = "dbo.spCustomer_GetById";
+
             try
             {
                 var customer = await _dataAccess.LoadData<Customer, dynamic>
-                    ("dbo.spCustomer_GetById", new
+                    (sql, new
                     {
                         @Id = id
                     }, ConnectionString, true);
@@ -50,7 +53,7 @@ namespace DataDashboard.Infrastructure.Data
                     (query, new
                     {
                         @Search = "%" +  search + "%" 
-                    }, ConnectionString);
+                    }, ConnectionString, false);
 
                 return result.ToList();
             }
@@ -66,7 +69,7 @@ namespace DataDashboard.Infrastructure.Data
                 var customers = await _dataAccess.LoadData<Customer, dynamic>
                     (query, new 
                     {
-                    }, ConnectionString);
+                    }, ConnectionString, false);
 
                 return customers.ToList();
             }
