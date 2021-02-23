@@ -336,3 +336,4 @@ obj/
 secretConnectionString.txt
 *.db*
 
+*.refactorlog
