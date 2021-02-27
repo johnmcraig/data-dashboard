@@ -30,6 +30,7 @@ namespace DataDashboard.Api
                 {
                     var dbContext = services.GetRequiredService<ApiContext>();
                     var seedData = services.GetRequiredService<DataSeed>();
+                    await dbContext.Database.EnsureCreatedAsync();
                     await dbContext.Database.MigrateAsync();
                     seedData.SeedData(100, 2000);
                 }

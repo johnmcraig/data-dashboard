@@ -19,7 +19,6 @@ namespace DataDashboard.Infrastructure.Data
             IConfiguration config) : base(options)
         {
             _config = config;
-            Database.EnsureCreated();
         }
 
         public DbSet<Customer> Customers { get; set; }
