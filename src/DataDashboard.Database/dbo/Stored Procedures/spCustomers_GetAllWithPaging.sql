@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[spCustomer_GetAllWithPaging]
+﻿CREATE PROCEDURE [dbo].[spCustomers_GetAllWithPaging]
 	@Offset INT,
 	@PageSize INT
 AS

@@ -24,7 +24,7 @@ namespace DataDashboard.Infrastructure.Data
             //const string query = "SELECT * FROM \"public\".\"Customers\" " +
             //                     " WHERE \"Id\" = @Id";
 
-            string sql = "dbo.spCustomer_GetById";
+            string sql = "dbo.spCustomers_GetById";
 
             try
             {
