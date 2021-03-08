@@ -7,7 +7,17 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	INSERT INTO [dbo].[Customers] ([Name], [Email], [State]) VALUES(@Name, @Email, @State);
+	INSERT INTO 
+		[dbo].[Customers] (
+		[Name], 
+		[Email], 
+		[State]
+	) 
+	VALUES(
+		@Name, 
+		@Email, 
+		@State
+	);
 	
 	SET @Id = SCOPE_IDENTITY();
 
