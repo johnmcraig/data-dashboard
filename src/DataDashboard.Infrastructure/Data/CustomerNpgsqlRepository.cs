@@ -24,7 +24,7 @@ namespace DataDashboard.Infrastructure.Data
             //const string query = "SELECT * FROM \"public\".\"Customers\" " +
             //                     " WHERE \"Id\" = @Id";
 
-            string sql = "dbo.spCustomer_GetById";
+            string sql = "dbo.spCustomers_GetById";
 
             try
             {
@@ -106,7 +106,7 @@ namespace DataDashboard.Infrastructure.Data
         public async Task<IList<Customer>> ListAllWithSearchingAndPaging(string search, int page, int pageSize)
         {
 
-            const string query = "SELECT * FROM ( SELECT * FROM \"public\".\"Customers\" WHERE \"Name\" ILIKE  @Search ) Sub" +
+            const string query = "SELECT * FROM ( SELECT * FROM \"public\".\"Customers\" WHERE \"Name\" ILIKE  @Search ) Sub " +
                                  "ORDER BY \"Id\" OFFSET @Offset ROWS " +
                                  "FETCH NEXT @PageSize ROWS ONLY";
 
@@ -168,11 +168,12 @@ namespace DataDashboard.Infrastructure.Data
 
         public async Task Update(Customer customer)
         {
-            const string query = "UPDATE \"public\".\"Customers\" SET \"Name\" = @Name, \"Email\" = @Email, \"State\" = @State WHERE \"Id\" = @Id";
+            //const string query = "UPDATE \"public\".\"Customers\" SET \"Name\" = @Name, \"Email\" = @Email, \"State\" = @State WHERE \"Id\" = @Id";
+            string query = "dbo.spCustomers_Update";
 
             try
             {
-                await _dataAccess.SaveData(query, customer, ConnectionString);
+                await _dataAccess.SaveData(query, customer, ConnectionString, true);
             }
             catch (Exception ex)
             {
