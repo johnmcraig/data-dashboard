@@ -41,12 +41,12 @@ else
             }
 
 
-            @*@for (int p = 1; p <= Customers.Count(); p++)
-                {
-                    <li>
-                        <a class="page-link" href="customers/@p">@p</a>
-                    </li>
-                }*@
+            @for (int p = 1; p <= Customers.Count(); p++)
+            {
+                <li>
+                    <a class="page-link" href="customers/@p">@p</a>
+                </li>
+            }
 
             <li>
                 <button class="page-link" @onclick="Next">
@@ -116,6 +116,12 @@ else
     private async Task Clear()
     {
         await LoadCustomers(pageNumber, pageSize);
+    }
+
+    private async Task TotalCount()
+    {
+        var totalCount = await CustomerRepo.GetTotalCount();
+        Customers = totalCount;
     }
 
     private async Task Next()
