@@ -118,12 +118,6 @@ else
         await LoadCustomers(pageNumber, pageSize);
     }
 
-    private async Task TotalCount()
-    {
-        var totalCount = await CustomerRepo.GetTotalCount();
-        Customers = totalCount;
-    }
-
     private async Task Next()
     {
         pageNumber++;
